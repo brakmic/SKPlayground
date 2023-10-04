@@ -18,6 +18,8 @@ Welcome to SkPlayground! This project leverages the power of the Microsoft [Sema
 │   ├── keycloak_helm_chart.txt
 │   ├── keycloak_prod_with_mysql.txt
 │   └── postgresl_helm_chart.txt
+├── scripts
+│   └── parse.sh
 ├── skills
 │   ├── DevOps
 │   └── Engineering
