@@ -3,10 +3,10 @@ Create a README.md that explains the creation of a TypeScript project according 
 
 RULES:
 - Your IDE is Visual Studio Code.
-- Always start with a new TypeScript project.
+- Always start with a new project.
 - There is no existing GitHub repository to clone from.
-- If the description references frameworks, make sure you include them.
-- Create all files containing full implementations.
+- If the description references frameworks or libraries, make sure you include them.
+- Provide full source code for every file involved.
 
 Description:{{$input}}
 
