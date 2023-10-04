@@ -226,9 +226,6 @@ This project facilitates the creation of Helm charts through a straightforward p
        ├──  templates
        └──  values.yaml
    ```
-   
-The generated Helm chart is organized into essential directories and files, including `Chart.yaml`, `values.yaml`, and the `templates` directory. It's now prepared for deployment using Helm's standard deployment commands.
-
 ---
 
 This workflow streamlines the process of transforming human-readable descriptions into deployable Helm charts, showcasing the power and efficiency of automating DevOps tasks through the Semantic Kernel and OpenAI's capabilities integrated within this project.
