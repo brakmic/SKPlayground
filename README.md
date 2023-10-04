@@ -230,5 +230,8 @@ This project facilitates the creation of Helm charts through a straightforward p
 
 This workflow streamlines the process of transforming human-readable descriptions into deployable Helm charts, showcasing the power and efficiency of automating DevOps tasks through the Semantic Kernel and OpenAI's capabilities integrated within this project.
 
+Additionally, this workflow is equally applicable when utilizing the `Kubernetes` function of the `DevOps` plugin. The parsing script (`parse.sh`) is designed to handle both Helm charts and pure Kubernetes YAML outputs seamlessly. When invoked with completions from the `Kubernetes` function, the script generates one or more Kubernetes YAML files instead, following the same directory structuring convention, making it a versatile tool for your DevOps automation tasks.
+
+
 ### LICENSE
 [MIT](./LICENSE.md)
