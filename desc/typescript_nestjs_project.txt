@@ -1,0 +1,3 @@
+Create a NestJS project implemented in TypeScript that implements a server which hosts a restful API.
+Add a few simple user-management methods to this API and make them routable by the server.
+Also create Swagger documentation for this API.
