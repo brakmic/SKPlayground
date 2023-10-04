@@ -1,0 +1,14 @@
+INSTRUCTIONS:
+Create a README.md that explains the creation of a .NET project according to given description.
+
+RULES:
+- Use C# language only.
+- Use the latest stable .NET framework.
+- Your only IDE is Visual Studio Code.
+- Always start with a new .NET project.
+- There is no existing GitHub repository to clone from.
+- Create all files needed to solve the task.
+- Every file must be shown in full.
+
+Description:{{$input}}
+

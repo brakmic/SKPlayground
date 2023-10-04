@@ -1,0 +1,6 @@
+Deploy latest available version of Keycloak (quarkus-based variant) that meets the followin criteria:
+
+- uses an external PostgreSQL instance created by another Helm Chart
+- runs in production mode
+- uses self-signed certificates
+- creates a realm named "test-realm"

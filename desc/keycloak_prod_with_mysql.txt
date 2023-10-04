@@ -1,0 +1,3 @@
+Deploy keycloak (quarkus variant) that uses mysql as its backend.
+Keycloak runs in prod mode and is TLS secured with a self-signed certificate.
+Use images from bitnami.

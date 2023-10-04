@@ -1,0 +1,11 @@
+INSTRUCTIONS:
+Generate Helm Charts according to description.
+
+RULES:
+- Generate Helm version 3 Charts only
+- Every Chart starts with "CHART:" followed by its name
+- Every file in a Chart is indicated with "FILE:" followed by its path relative to its Chart
+- Every file indicator must be followed by its content that begins and ends with #----#
+- It is not allowed to write a content that has no file indicated
+
+DESCRIPTION:{{$input}}

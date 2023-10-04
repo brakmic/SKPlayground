@@ -1,0 +1,10 @@
+INSTRUCTIONS:
+Generate YAML files to create a kubernetes deployment according to the given description.
+
+RULES:
+- All YAML files must be complete
+- YAML files must be listed one by one
+- Every file is indicated with "FILE:" followed by its path
+- Every file content must begin and end with #----#
+
+Description:{{$input}}

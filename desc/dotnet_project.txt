@@ -1,0 +1,1 @@
+Create an application that takes a string, hashes it with SHA256, and then returns that hash back to the user.
