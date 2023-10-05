@@ -1,6 +1,8 @@
-# SkPlayground Project
+# SkPlayground
 
-Welcome to SkPlayground! This project leverages the power of the Microsoft [Semantic Kernel](https://github.com/microsoft/semantic-kernel/tree/main) to interact with the [OpenAI](https://openai.com/) API.
+Welcome to SkPlayground! 
+
+This project leverages the power of the Microsoft [Semantic Kernel](https://github.com/microsoft/semantic-kernel/tree/main) to interact with the [OpenAI](https://openai.com/) API.
 
 ## Project Structure
 
