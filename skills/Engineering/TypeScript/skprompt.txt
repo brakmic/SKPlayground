@@ -8,5 +8,5 @@ RULES:
 - If the description references frameworks or libraries, make sure you include them.
 - Provide full source code for every file involved.
 
-Description:{{$input}}
+DESCRIPTION:{{$input}}
 
