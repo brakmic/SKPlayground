@@ -8,8 +8,8 @@ This project leverages the power of the Microsoft [Semantic Kernel](https://gith
 .
 ├── Program.cs
 ├── README.md
-├── SkPlaygroud.csproj
-├── SkPlaygroud.sln
+├── SkPlayground.csproj
+├── SkPlayground.sln
 ├── appsettings.plugins.json
 ├── config
 │   └── appsettings.json.example
