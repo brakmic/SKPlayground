@@ -4,7 +4,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.Planning;
+using SkPlayground.Plugins;
 
+namespace SkPlayground;
 class Program
 {
   private static IConfiguration? Configuration { get; set; }
@@ -100,12 +102,14 @@ class Program
 
       var skillsRoot = Path.Combine(Directory.GetCurrentDirectory(), rootDirectory!);
       var skillImport = kernel.ImportSemanticSkillFromDirectory(skillsRoot, pluginDirectories!);
-      var keyGenPlugin = kernel.ImportSkill(new Plugins.KeyAndCertGenerator(), "KeyAndCertGeneratorPlugin");
-      var secretsPlugin = kernel.ImportSkill(new Plugins.Updater(), "SecretsUpdaterPlugin");
+      var keyGenPlugin = kernel.ImportSkill(new KeyAndCertGenerator(), nameof(KeyAndCertGenerator));
+      var secretsPlugin = kernel.ImportSkill(new SecretYamlUpdater(), nameof(SecretYamlUpdater));
 
       var planner = new SequentialPlanner(kernel);
       var ask = await File.ReadAllTextAsync(file.FullName);
       var plan = await planner.CreatePlanAsync(ask);
+
+      Console.WriteLine($"\nPLAN:\n{plan.ToSafePlanString()}");
 
       var result = await plan.InvokeAsync();
 
