@@ -1,3 +1,5 @@
 Directory.build.props
 obj
 bin
+.semantic-kernel
+output.txt
