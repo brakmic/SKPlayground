@@ -1,0 +1,68 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "Debug Planner",
+          "type": "coreclr",
+          "request": "launch",
+          "preLaunchTask": "build",
+          "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+          "args": ["-i", "./desc/keycloak_plan.txt", "-f", "None"],
+          "cwd": "${workspaceFolder}",
+          "stopAtEntry": false,
+          "serverReadyAction": {
+              "action": "openExternally",
+              "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+          },
+          "env": {
+              "ASPNETCORE_ENVIRONMENT": "Development"
+          },
+          "sourceFileMap": {
+              "/Views": "${workspaceFolder}/Views"
+          },
+          "console": "internalConsole"
+      },
+      {
+        "name": "Debug Planner 2",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+        "args": ["-i", "./desc/generate_secret_plan.txt", "-f", "None"],
+        "cwd": "${workspaceFolder}",
+        "stopAtEntry": false,
+        "serverReadyAction": {
+            "action": "openExternally",
+            "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+        },
+        "env": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "sourceFileMap": {
+            "/Views": "${workspaceFolder}/Views"
+        },
+        "console": "internalConsole"
+        },
+      {
+        "name": "Debug Function",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+        "args": ["run", "--", "-i", "./desc/keycloak_prod_with_mysql.txt", "-f", "Kubernetes"],
+        "cwd": "${workspaceFolder}",
+        "stopAtEntry": false,
+        "serverReadyAction": {
+            "action": "openExternally",
+            "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+        },
+        "env": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "sourceFileMap": {
+            "/Views": "${workspaceFolder}/Views"
+        },
+        "console": "internalConsole"
+    }
+  ]
+}
