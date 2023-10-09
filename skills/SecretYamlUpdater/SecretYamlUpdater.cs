@@ -48,7 +48,7 @@ public class SecretYamlUpdater
             string dataSection = match.Groups[1].Value;
 
             // Define a regex pattern to match the key and cert fields within the data: section
-            var fieldRegex = new Regex(@"([ \t]*)(.*?)(key|cert)(.*?:[ \t]*).*?$", RegexOptions.Multiline | RegexOptions.Compiled);
+            var fieldRegex = new Regex(@"([ \t]*)(.*?)(key|cert|crt)(.*?:[ \t]*).*?$", RegexOptions.Multiline | RegexOptions.Compiled);
 
             // Replace the fields within the data: section
             string updatedDataSection = fieldRegex.Replace(dataSection, fieldMatch =>

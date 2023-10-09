@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Create .NET projects for given task",
+  "description": "Extract JavaScript from an HTML document",
   "type": "completion",
   "completion": {
     "max_tokens": 1000,
@@ -13,7 +13,7 @@
     "parameters": [
       {
         "name": "input",
-        "description": "The description of the project or a single program to be created",
+        "description": "The URL of the HML document",
         "defaultValue": ""
       }
     ]

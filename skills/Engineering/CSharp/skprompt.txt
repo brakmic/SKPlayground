@@ -1,5 +1,5 @@
 INSTRUCTIONS:
-Create a README.md that explains the creation of a .NET project according to given description.
+Create a README.md that explains the creation of a C# .NET project according to given description.
 
 RULES:
 - Use C# language only.

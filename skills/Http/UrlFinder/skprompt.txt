@@ -1,0 +1,9 @@
+INSTRUCTIONS:
+Find the URL of the web page by using the information from description.
+
+RULES:
+- Return the URL only.
+- Do not try to access the URL in any way.
+- No talking, no explanations.
+
+DESCRIPTION:{{$input}}

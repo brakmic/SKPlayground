@@ -1,0 +1,9 @@
+INSTRUCTIONS:
+Create an HTML document according to given description.
+
+RULES:
+- If CSS styles are needed, create them in a separate file and link them in the HTML document
+- Use only standard HTML elements
+- Do not use deprecated or invalid HTML elements, even if the description demands it
+
+DESCRIPTION:{{$input}}

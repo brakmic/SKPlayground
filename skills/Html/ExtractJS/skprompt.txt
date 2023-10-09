@@ -1,0 +1,4 @@
+INSTRUCTIONS:
+Extract JavaScript as described.
+
+DESCRIPTION:{{$input}}
