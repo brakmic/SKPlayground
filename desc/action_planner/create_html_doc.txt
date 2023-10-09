@@ -1,0 +1,8 @@
+Create an HTML document containing a tutorial on the C programming language.
+
+- It has a title is "A simple Intro to C".
+- It contains no less than five paragraphs.
+- It has a table of contents.
+- It uses the default HTML tags to create tables, paragraphs, titles etc.
+- It uses no JavaScript or any other scripting language
+- It's CSS styles, if any, are located in a separate document

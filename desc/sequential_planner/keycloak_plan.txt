@@ -1,0 +1,13 @@
+Create YAML files to deploy the following to Kubernetes:
+
+- Keycloak (quarkus) from bitnami
+- Keycloak must run in production mode with HTTP only
+- Keycloak's username and password are "admin" and "password"
+- NGINX-Ingress to handle TLS-termination for Keycloak that runs behind it
+- NGINX-Ingress references a secret named "keycloak-self-signed-cert-secret"
+- Secret named "keycloak-self-signed-cert-secret" that contains a self-signed certificate encoded in base64
+
+RULES:
+- Do not use Helm
+- Do not write code
+- Do not write tutorials

@@ -14,7 +14,7 @@
       {
         "name": "input",
         "description": "The description of the deployment to be be created",
-        "defaultValue": ""
+        "defaultValue": "keycloak with postgres backend and prod mode activated. nginx-ingress is used to forward calls to keycloak. ingress uses tls termination."
       }
     ]
   }
