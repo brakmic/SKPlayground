@@ -3,3 +3,4 @@ obj
 bin
 .semantic-kernel
 output.txt
+.DS_Store
