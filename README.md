@@ -2,36 +2,49 @@ Welcome to SK Playground!
 
 This project leverages the power of the Microsoft [Semantic Kernel](https://github.com/microsoft/semantic-kernel/tree/main) to interact with the [OpenAI](https://openai.com/) API.
 
+## Companion Article Series
+This repository serves as a companion to a series of articles discussing the integration and utilization of Semantic Kernel. These articles provide deeper insights into the concepts and functionalities demonstrated in this repository.
+
+- [Intro to Semantic Kernel - Part One](#) 
+- [Intro to Semantic Kernel - Part Two](#)
+
 ## Project Structure
 
 ```plaintext
 .
-├── Program.cs
-├── README.md
 ├── SkPlayground.csproj
 ├── SkPlayground.sln
 ├── appsettings.plugins.json
 ├── config
 │   └── appsettings.json.example
 ├── desc
+│   ├── action_planner
+│   │   ├── create_html_doc.txt
+│   │   ├── download_document.txt
+│   │   ├── find_url.txt
 │   ├── dotnet_project.txt
 │   ├── keycloak_helm_chart.txt
 │   ├── keycloak_prod_with_mysql.txt
-│   └── postgresl_helm_chart.txt
+│   ├── postgresl_helm_chart.txt
+│   ├── sequential_planner
+│   │   ├── extract_js.txt
+│   │   ├── generate_secret_plan.txt
+│   │   └── keycloak_plan.txt
+│   └── typescript_nestjs_project.txt
 ├── scripts
 │   └── parse.sh
 ├── skills
 │   ├── DevOps
-│   └── Engineering
-└── util
-    ├── EndpointTypes.cs
-    ├── KernelBuilderExtensions.cs
-    ├── KernelSettings.cs
-    └── ServiceTypes.cs
+│   ├── Engineering
+│   ├── Html
+│   ├── Http
+│   ├── KeyAndCertGenerator
+│   ├── SecretYamlGenerator
+│   └── SecretYamlUpdater
 ```
 
 ## Core Features
-SkPlayground is built on C# and [.NET 7](https://dotnet.microsoft.com/en-us/download), using [Semantic Kernel](https://www.nuget.org/packages/Microsoft.SemanticKernel/) from Microsoft. It is equipped with two main plugins:
+SkPlayground is built on C# and [.NET 7](https://dotnet.microsoft.com/en-us/download), using [Semantic Kernel](https://www.nuget.org/packages/Microsoft.SemanticKernel/) from Microsoft. It is equipped with several plugins:
 
 ### DevOps Plugin:
 - **Kubernetes**: Generates YAML files based on user descriptions to complete specific tasks.
@@ -41,9 +54,40 @@ SkPlayground is built on C# and [.NET 7](https://dotnet.microsoft.com/en-us/down
 - **TypeScript**: Generates a README.md with a detailed description and source codes for building NodeJS projects based on TypeScript.
 - **CSharp**: Generates a README.md with a detailed description and source codes for building .NET projects based on C#.
 
+## Html Plugin:
+- **CreateHtmlDoc**: Generate a HTML file
+- **ExtractJS**: Extract embedded JavaScript from a HTML document.
+
+## Http Plugin:
+- **ExecuteGetAsync**: Execute a GET request.
+- **ExecutePostAsync**: Execute a POST request.
+- **ExecutePutAsync**: Execute a PUT request.
+
+## KeyAndCertGenerator Plugin:
+- **GenerateBase64KeyAndCert**: Create a base64-encoded private key and certificate.
+- **Extract**: Extract key or certificate from a base64-encoded string.
+
+## SecretYamlGenerator Plugin:
+- **CreateSecretYaml**: Create a Kubernetes Secret YAML file.
+
+## SecretYamlUpdater:
+- **UpdateKubernetesSecretYamlString**: Update the data section of a Kubernetes Secret YAML.
 ## Usage Examples
 
 The program can be executed via the command line using the `dotnet run` command, along with specifying two arguments: `-i` (or `--input`) for the input file, and `-f` (or `--function`) for the function to be executed. The input file should contain a description of the task, and the function argument should specify which function to run.
+
+**When using Planners**, there's no need to manually set the function.
+
+**Before executing any task**, ensure to activate the compatible `Run*` method within the *CommandLine* handler.
+
+```cs
+ rootCommand.SetHandler(
+        //Run,
+        //RunWithActionPlanner,
+        RunWithSequentialPlanner,
+        fileOption, functionOption
+    );
+```
 
 Here are some examples:
 
@@ -119,7 +163,15 @@ Here's an example configuration:
 {
   "SkillSettings": {
     "Root": "skills",
-    "Plugins": ["DevOps", "Engineering"]
+    "Plugins": [
+      "DevOps",
+      "Engineering",
+      "Html",
+      "Http",
+      "KeyAndCertGenerator",
+      "SecretYamlGenerator",
+      "SecretYamlUpdater"
+    ]
   }
 }
 ```
@@ -231,6 +283,15 @@ This project facilitates the creation of Helm charts through a straightforward p
 This workflow streamlines the process of transforming human-readable descriptions into deployable Helm charts, showcasing the power and efficiency of automating DevOps tasks through the Semantic Kernel and OpenAI's capabilities integrated within this project.
 
 Additionally, this workflow is equally applicable when utilizing the `Kubernetes` function of the `DevOps` plugin. The parsing script (`parse.sh`) is designed to handle both Helm charts and pure Kubernetes YAML outputs seamlessly. When invoked with completions from the `Kubernetes` function, the script generates one or more Kubernetes YAML files instead, following the same directory structuring convention, making it a versatile tool for your DevOps automation tasks.
+
+## Showroom
+
+### Action Planner
+
+![action_planner_debugging](./gifs/action_planner.gif)
+### Sequential Planner
+
+![sequential_planner_debugging](./gifs/sequential-planner_with_semantic-kernel.gif)
 
 
 ### LICENSE
