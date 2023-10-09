@@ -1,0 +1,2 @@
+Get the HTML document located at https://news.ycombinator.com.
+Get the embedded JavaScript from it.
