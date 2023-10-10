@@ -1,152 +1,159 @@
 {
   "version": "0.2.0",
   "configurations": [
-      {
-          "name": "Seq. Planner (Keycloak)",
-          "type": "coreclr",
-          "request": "launch",
-          "preLaunchTask": "build",
-          "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-          "args": ["-i", "./desc/sequential_planner/keycloak_plan.txt"],
-          "cwd": "${workspaceFolder}",
-          "stopAtEntry": false,
-          "serverReadyAction": {
-              "action": "openExternally",
-              "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-          },
-          "env": {
-              "ASPNETCORE_ENVIRONMENT": "Development"
-          },
-          "sourceFileMap": {
-              "/Views": "${workspaceFolder}/Views"
-          },
-          "console": "internalConsole"
+    {
+      "name": "Seq. Planner (Keycloak)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+      "args": ["-i", "./desc/sequential_planner/keycloak_plan.txt"],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
       },
-      {
-        "name": "Seq. Planner (Secret YAML)",
-        "type": "coreclr",
-        "request": "launch",
-        "preLaunchTask": "build",
-        "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-        "args": ["-i", "./desc/sequential_planner/generate_secret_plan.txt"],
-        "cwd": "${workspaceFolder}",
-        "stopAtEntry": false,
-        "serverReadyAction": {
-            "action": "openExternally",
-            "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-        },
-        "env": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-        },
-        "sourceFileMap": {
-            "/Views": "${workspaceFolder}/Views"
-        },
-        "console": "internalConsole"
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "console": "internalConsole"
     },
     {
-        "name": "Seq. Planner (Extract JS)",
-        "type": "coreclr",
-        "request": "launch",
-        "preLaunchTask": "build",
-        "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-        "args": ["-i", "./desc/sequential_planner/extract_js.txt"],
-        "cwd": "${workspaceFolder}",
-        "stopAtEntry": false,
-        "serverReadyAction": {
-            "action": "openExternally",
-            "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-        },
-        "env": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-        },
-        "sourceFileMap": {
-            "/Views": "${workspaceFolder}/Views"
-        },
-        "console": "internalConsole"
-        },
-        {
-            "name": "Action Planner (Download Doc)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-            "args": ["-i", "./desc/action_planner/download_document.txt"],
-            "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            },
-            "console": "internalConsole"
-        },
-        {
-            "name": "Action Planner (Find URL)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-            "args": ["-i", "./desc/action_planner/find_url.txt"],
-            "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            },
-            "console": "internalConsole"
-        },
-        {
-            "name": "Action Planner (Create HTML)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-            "args": ["-i", "./desc/action_planner/create_html_doc.txt"],
-            "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-        },
-        "env": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-        },
-        "sourceFileMap": {
-            "/Views": "${workspaceFolder}/Views"
-        },
-        "console": "internalConsole"
-        },
+      "name": "Seq. Planner (Secret YAML)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+      "args": ["-i", "./desc/sequential_planner/generate_secret_plan.txt"],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "console": "internalConsole"
+    },
     {
-        "name": "Debug Function",
-        "type": "coreclr",
-        "request": "launch",
-        "preLaunchTask": "build",
-        "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-        "args": ["run", "--", "-i", "./desc/keycloak_prod_with_mysql.txt", "-f", "Kubernetes"],
-        "cwd": "${workspaceFolder}",
-        "stopAtEntry": false,
-        "serverReadyAction": {
-            "action": "openExternally",
-            "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-        },
-        "env": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-        },
-        "sourceFileMap": {
-            "/Views": "${workspaceFolder}/Views"
-        },
-        "console": "internalConsole"
+      "name": "Seq. Planner (Extract JS)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+      "args": ["-i", "./desc/sequential_planner/extract_js.txt"],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "name": "Action Planner (Download Doc)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+      "args": ["-i", "./desc/action_planner/download_document.txt"],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "name": "Action Planner (Find URL)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+      "args": ["-i", "./desc/action_planner/find_url.txt"],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "name": "Action Planner (Create HTML)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+      "args": ["-i", "./desc/action_planner/create_html_doc.txt"],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "name": "Debug Function",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+      "args": [
+        "run",
+        "--",
+        "-i",
+        "./desc/keycloak_prod_with_mysql.txt",
+        "-f",
+        "Kubernetes"
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "console": "internalConsole"
     }
   ]
 }
