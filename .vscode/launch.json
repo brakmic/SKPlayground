@@ -128,6 +128,27 @@
       "console": "internalConsole"
     },
     {
+      "name": "Hooks (Download HTML Doc)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+      "args": [""],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "console": "internalConsole"
+    },
+    {
       "name": "Debug Function",
       "type": "coreclr",
       "request": "launch",
