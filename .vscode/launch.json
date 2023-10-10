@@ -128,7 +128,7 @@
       "console": "internalConsole"
     },
     {
-      "name": "Hooks (Download HTML Doc)",
+      "name": "Hooks",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
