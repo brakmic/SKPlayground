@@ -1,4 +1,5 @@
-﻿using System.CommandLine;
+﻿using System.Collections.Immutable;
+using System.CommandLine;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
@@ -158,8 +159,10 @@ class Program
       Console.WriteLine($"\nRESULT: {result}");
     }
   }
+
   private static async Task RunWithHooks(FileInfo file, string function)
   {
+    #region Kernel Setup
     var kernelSettings = KernelSettings.LoadSettings();
 
     using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
@@ -174,34 +177,30 @@ class Program
         .WithLoggerFactory(loggerFactory)
         .WithCompletionService(kernelSettings)
         .Build();
+    #endregion
 
     if (kernelSettings.EndpointType == EndpointTypes.TextCompletion)
     {
-      var rootDirectory = Configuration!.GetSection("SkillSettings:Root").Get<string>();
-      var pluginDirectories = Configuration.GetSection("SkillSettings:Plugins").Get<string[]>();
-
-      var skillsRoot = Path.Combine(Directory.GetCurrentDirectory(), rootDirectory!);
-      var skillImport = kernel.ImportSemanticSkillFromDirectory(skillsRoot, pluginDirectories!);
-      var keyGenPlugin = kernel.ImportSkill(new KeyAndCertGenerator(), nameof(KeyAndCertGenerator));
-      var secretsPlugin = kernel.ImportSkill(new SecretYamlUpdater(), nameof(SecretYamlUpdater));
+      // import the plugin that contains native functions for sending http queries
+      var httpPlugin = kernel.ImportSkill(new HttpPlugin(), nameof(HttpPlugin));
 
       // configure hooks
       kernel.FunctionInvoking += OnFunctionInvoking;
       kernel.FunctionInvoked += OnFunctionInvoked;
 
-      var planner = new SequentialPlanner(kernel);
-      var ask = await File.ReadAllTextAsync(file.FullName);
-      var plan = await planner.CreatePlanAsync(ask);
+      // We want to download this document:
+      // "The Development of the C Language"
+      // that is located here:
+      var ask = "https://www.bell-labs.com/usr/dmr/www/chist.html";
 
-      Console.WriteLine($"\nPLAN:\n{plan.ToSafePlanString()}");
-
-      var result = await plan.InvokeAsync();
+      // We send our ASK to the Kernel
+      var result = await kernel.RunAsync(ask, httpPlugin.ToImmutableDictionary()["ExecuteGet"]);
 
       Console.WriteLine($"\nRESULT: {result}");
     }
   }
 
-  // handlers
+  //below are the pre/post event handlers
   private static void OnFunctionInvoked(object? sender, FunctionInvokedEventArgs e)
   {
     Console.WriteLine($"{e.FunctionView.Name}");
@@ -209,6 +208,11 @@ class Program
 
   private static void OnFunctionInvoking(object? sender, FunctionInvokingEventArgs e)
   {
+    // By default, the input variable is called INPUT.
+    // However, the native function "ExecuteGet" from the Plugin expects "url" as its only argument.
+    // So we must "hook into" the flow and manipulate variables before SK calls the "HttpGet" method.
+    e.SKContext.Variables.Remove("INPUT", out var urlVal);
+    e.SKContext.Variables.TryAdd("url", urlVal!);
     Console.WriteLine($"{e.FunctionView.Name}");
   }
 }
