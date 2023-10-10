@@ -1,12 +1,16 @@
 ﻿using System.Collections.Immutable;
 using System.CommandLine;
+using System.Text;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Events;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.Planning;
+using Microsoft.SemanticKernel.SemanticFunctions;
 using SkPlayground.Plugins;
+using static Microsoft.SemanticKernel.SemanticFunctions.PromptTemplateConfig;
 
 namespace SkPlayground;
 class Program
@@ -39,7 +43,8 @@ class Program
         //Run,
         //RunWithActionPlanner,
         //RunWithSequentialPlanner,
-        RunWithHooks,
+        // RunWithHooks,
+        RunWithHooks2,
         fileOption, functionOption
     );
 
@@ -198,6 +203,106 @@ class Program
 
       Console.WriteLine($"\nRESULT: {result}");
     }
+  }
+
+  private static async Task RunWithHooks2(FileInfo file, string function)
+  {
+    #region Kernel Setup
+    var kernelSettings = KernelSettings.LoadSettings();
+
+    using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+    {
+      builder
+              .SetMinimumLevel(kernelSettings.LogLevel ?? LogLevel.Warning)
+              .AddConsole()
+              .AddDebug();
+    });
+
+    IKernel kernel = new KernelBuilder()
+        .WithLoggerFactory(loggerFactory)
+        .WithCompletionService(kernelSettings)
+        .Build();
+    #endregion
+
+    if (kernelSettings.EndpointType == EndpointTypes.TextCompletion)
+    {
+      // this is the "config.json" of our semantic function
+      var promptConfig = new PromptTemplateConfig
+      {
+        Schema = 1,
+        Type = "completion",
+        Description = "Ask something about a person",
+        Completion =
+        {
+            MaxTokens = 1000,
+            Temperature = 0.5,
+            TopP = 0.0,
+            PresencePenalty = 0.0,
+            FrequencyPenalty = 0.0
+        },
+        Input =
+        {
+            Parameters = new List<InputParameter>
+            {
+                new InputParameter
+                {
+                    Name = "input",
+                    Description = "Person's names",
+                    DefaultValue = ""
+                }
+            }
+        }
+      };
+      // we define the semantic function
+      var askAbutPerson = kernel.CreateSemanticFunction(
+        "Write a short document about {{$input}}. It must have titles and paragraphs.",
+        config: promptConfig,
+        functionName: "askAboutPerson");
+
+      // configure hooks
+      kernel.FunctionInvoking += (object? sender, FunctionInvokingEventArgs e) =>
+      {
+        Console.WriteLine($"{e.FunctionView.Name}");
+      };
+      kernel.FunctionInvoked += (object? sender, FunctionInvokedEventArgs e) =>
+      {
+        // convert the result to Markdown
+        Console.WriteLine($"{ConvertToMarkdown(e.SKContext.Result)}");
+      };
+
+      // We send our ASK to the Kernel
+      var result = await kernel.RunAsync("Denis Ritchie", askAbutPerson);
+    }
+  }
+
+  /// <summary>
+  /// A helper function that converts plain text to markdown
+  /// </summary>
+  /// <param name="plainText">Plain text string</param>
+  /// <returns>Content as Markdown string</returns>
+  private static string ConvertToMarkdown(string text)
+  {
+    // This flag is used to differentiate between the document title and the subsequent titles
+    bool isFirstTitle = true;
+
+    // Identify and replace titles in the text.
+    // The pattern (.*\w)\n looks for any line that ends with a word character (\w),
+    // ensuring it's a title line and not a blank line or a line of text that's part of a paragraph.
+    var result = Regex.Replace(text, @"(.*\w)\n", match =>
+    {
+      // For the first title, we prefix it with a single hash (#)
+      if (isFirstTitle)
+      {
+        isFirstTitle = false;
+        return $"# {match.Groups[1].Value}\n\n";
+      }
+      else
+      {
+        return $"## {match.Groups[1].Value}\n\n";
+      }
+    });
+
+    return result;
   }
 
   //below are the pre/post event handlers
