@@ -293,6 +293,8 @@ Additionally, this workflow is equally applicable when utilizing the `Kubernetes
 
 ![sequential_planner_debugging](./gifs/sequential-planner_with_semantic-kernel.gif)
 
+## Hooks
 
+![sk_hooks](./gifs/sk_hooks.gif)
 ### LICENSE
 [MIT](./LICENSE.md)
