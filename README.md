@@ -7,6 +7,7 @@ This repository serves as a companion to a series of articles discussing the int
 
 - [Intro to Semantic Kernel - Part One](https://blog.brakmic.com/intro-to-semantic-kernel-part-one/) 
 - [Intro to Semantic Kernel - Part Two](https://blog.brakmic.com/intro-to-semantic-kernel-part-two/)
+- [Intro to Semantic Kernel - Part Three](https://blog.brakmic.com/intro-to-semantic-kernel-part-three/)
 
 ## Project Structure
 
