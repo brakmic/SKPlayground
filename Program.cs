@@ -1,6 +1,5 @@
 ﻿using System.Collections.Immutable;
 using System.CommandLine;
-using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -40,11 +39,11 @@ class Program
         };
 
     rootCommand.SetHandler(
-        //Run,
+        Run,
         //RunWithActionPlanner,
         //RunWithSequentialPlanner,
-        // RunWithHooks,
-        RunWithHooks2,
+        //RunWithHooks, /* this example uses the native function "ExecuteGet" from HttpPlugin */
+        //RunWithHooks2, /* this example uses a semantic function and the Markdown converter function */
         fileOption, functionOption
     );
 
