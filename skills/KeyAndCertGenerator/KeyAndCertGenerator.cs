@@ -1,9 +1,8 @@
+using System.Text;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using Microsoft.SemanticKernel.Orchestration;
-using Microsoft.SemanticKernel.SkillDefinition;
+using Microsoft.SemanticKernel;
 
 namespace SkPlayground.Plugins;
 
@@ -16,12 +15,12 @@ public class KeyAndCertGenerator
     /// <param name="delimiter">The delimiter to use for separating the private key and certificate in the returned string. Defaults to "|||" if not provided.</param>
     /// <returns>A single string containing the Base64-encoded private key and certificate, separated by the specified delimiter.</returns>
     [SKFunction, Description("Generate a public-private key pair and a self-signed certificate, returning their Base64 representations concatenated into a single string")]
-    [SKParameter("commonName", "The Common Name (CN) to use for the certificate")]
-    [SKParameter("delimiter", "The delimiter to use for separating the private key and certificate in the returned string")]
-    public string GenerateBase64KeyAndCert(SKContext context)
+    public string GenerateBase64KeyAndCert(
+    [Description("The Common Name (CN) to use for the certificate")] string commonName = "localhost",
+    [Description("The delimiter to use for separating the private key and certificate in the returned string")] string delimiter = "|||"
+
+    )
     {
-        string commonName = context.Variables["commonName"] ?? "localhost";
-        string delimiter = context.Variables["delimiter"] ?? "|||";
         using RSA rsa = RSA.Create(2048);
         CertificateRequest certReq = new CertificateRequest($"CN={commonName}", rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
         X509Certificate2 certificate = certReq.CreateSelfSigned(DateTimeOffset.Now, DateTimeOffset.Now.AddYears(1));
@@ -42,17 +41,15 @@ public class KeyAndCertGenerator
     /// <param name="valueToExtract">The value to extract from the concatenated string: "key" for the private key, "cert" for the certificate.</param>
     /// <returns>The requested value, either the private key or certificate, extracted from the concatenated string.</returns>
     [SKFunction, Description("Extracts either the private key or certificate from a concatenated string")]
-    [SKParameter("concatenatedString", "The concatenated string containing the private key and certificate in the concatenated string")]
-    [SKParameter("delimiter", "The delimiter used to separate the private key and certificate")]
-    [SKParameter("valueToExtract", "The value to extract from the concatenated string: key or cert")]
-    public string Extract(SKContext context)
+    public string Extract(
+    [Description("The concatenated string containing the private key and certificate in the concatenated string")] string concatenatedString,
+    [Description("The delimiter used to separate the private key and certificate")] string delimiter,
+    [Description("The value to extract from the concatenated string: key or cert")] string valueToExtract
+    )
     {
-        var concatenatedString = context.Variables["concatenatedString"] ?? "";
-        var delimiter = context.Variables["delimiter"] ?? "|||";
-        var valueToExtract = context.Variables["valueToExtract"];
         var parts = concatenatedString.Split(new[] { delimiter }, StringSplitOptions.None);
 
-        if (parts.Length != 2)
+        if ((parts.Length != 2) || string.IsNullOrEmpty(delimiter))
             throw new ArgumentException("Invalid concatenated string or delimiter.");
 
         if (valueToExtract.ToLower() == "key")

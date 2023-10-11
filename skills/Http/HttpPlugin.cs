@@ -1,6 +1,6 @@
 using System.ComponentModel;
+using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Orchestration;
-using Microsoft.SemanticKernel.SkillDefinition;
 
 namespace SkPlayground.Plugins;
 
@@ -10,10 +10,9 @@ public class HttpPlugin
   private readonly HttpClient _httpClient = new HttpClient();
 
   [SKFunction, Description("Executes a GET request to retrieve a document from the given URL")]
-  [SKParameter("url", "The URL to send the request to")]
   public async Task<string> ExecuteGetAsync(SKContext context)
   {
-    var url = context.Variables["url"].ToString();
+    var url = context.Variables["url"];
     var request = new HttpRequestMessage(HttpMethod.Get, url);
     request.Headers.Add("User-Agent", userAgent);
     HttpResponseMessage response = await _httpClient.SendAsync(request);
@@ -22,12 +21,11 @@ public class HttpPlugin
   }
 
   [SKFunction, Description("Executes a POST request to create a new resource at given URL")]
-  [SKParameter("url", "The URL to send the request to")]
-  [SKParameter("data", "The data to send in the request body")]
-  public async Task<string> ExecutePostAsync(SKContext context)
+  public async Task<string> ExecutePostAsync(
+  [Description("The URL to send the request to")] string url,
+  [Description("The data to send in the request body")] string data
+  )
   {
-    var url = context.Variables["url"].ToString();
-    var data = context.Variables["data"].ToString();
     HttpContent content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
     var request = new HttpRequestMessage(HttpMethod.Post, url)
     {
@@ -40,12 +38,11 @@ public class HttpPlugin
   }
 
   [SKFunction, Description("Executes a PUT request to update an existing resource at given URL")]
-  [SKParameter("url", "The URL to send the request to")]
-  [SKParameter("data", "The data to send in the request body")]
-  public async Task<string> ExecutePutAsync(SKContext context)
+  public async Task<string> ExecutePutAsync(
+  [Description("The URL to send the request to")] string url,
+  [Description("The data to send in the request body")] string data
+  )
   {
-    var url = context.Variables["url"].ToString();
-    var data = context.Variables["data"].ToString();
     HttpContent content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
     var request = new HttpRequestMessage(HttpMethod.Put, url)
     {

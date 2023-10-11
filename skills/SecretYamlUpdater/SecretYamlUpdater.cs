@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using System.Text.RegularExpressions;
-using Microsoft.SemanticKernel.Orchestration;
-using Microsoft.SemanticKernel.SkillDefinition;
+using Microsoft.SemanticKernel;
 
 namespace SkPlayground.Plugins;
 
@@ -15,14 +14,12 @@ public class SecretYamlUpdater
     /// <param name="base64Cert">The base64-encoded certificate.</param>
     /// <returns>The updated YAML content.</returns>
     [SKFunction, Description("Updates a Kubernetes Secret YAML string with the provided base64-encoded key and certificate.")]
-    [SKParameter("yamlContent", "YAML content as string")]
-    [SKParameter("base64Key", "The base64-encoded private key")]
-    [SKParameter("base64Cert", "The base64-encoded certificate")]
-    public string UpdateKubernetesSecretYamlString(SKContext context)
+    public string UpdateKubernetesSecretYamlString(
+        [Description("YAML content as string")] string yamlContent,
+        [Description("The base64-encoded private key")] string base64Key,
+        [Description("The base64-encoded certificate")] string base64Cert
+    )
     {
-        string yamlContent = context.Variables["yamlContent"];
-        string base64Key = context.Variables["base64Key"];
-        string base64Cert = context.Variables["base64Cert"];
         return UpdateKubernetesSecretYamlContent(yamlContent, base64Key, base64Cert);
     }
 
