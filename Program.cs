@@ -10,6 +10,7 @@ using Microsoft.SemanticKernel.Planning;
 using Microsoft.SemanticKernel.SemanticFunctions;
 using SkPlayground.Plugins;
 using static Microsoft.SemanticKernel.SemanticFunctions.PromptTemplateConfig;
+using SkPlayground.Extensions;
 
 namespace SkPlayground;
 class Program
@@ -19,8 +20,8 @@ class Program
   public static async Task Main(string[] args)
   {
     var builder = new ConfigurationBuilder()
-        .SetBasePath(Directory.GetCurrentDirectory())
-        .AddJsonFile("appsettings.plugins.json", optional: false, reloadOnChange: true);
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFiles(Directory.GetCurrentDirectory(), "appsettings.*.json", optional: false, reloadOnChange: true);
 
     Configuration = builder.Build();
 
@@ -39,10 +40,10 @@ class Program
         };
 
     rootCommand.SetHandler(
-        Run,
+        //Run,
         //RunWithActionPlanner,
         //RunWithSequentialPlanner,
-        //RunWithHooks, /* this example uses the native function "ExecuteGet" from HttpPlugin */
+        RunWithHooks, /* this example uses the native function "ExecuteGet" from HttpPlugin */
         //RunWithHooks2, /* this example uses a semantic function and the Markdown converter function */
         fileOption, functionOption
     );
