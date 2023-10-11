@@ -4,3 +4,5 @@ bin
 .semantic-kernel
 output.txt
 .DS_Store
+appsettings.dev.json
+config/
