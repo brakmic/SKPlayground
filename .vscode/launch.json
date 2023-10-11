@@ -149,19 +149,12 @@
       "console": "internalConsole"
     },
     {
-      "name": "Debug Function",
+      "name": "Debug Run",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-      "args": [
-        "run",
-        "--",
-        "-i",
-        "./desc/keycloak_prod_with_mysql.txt",
-        "-f",
-        "Kubernetes"
-      ],
+      "args": ["-i", "./desc/keycloak_prod_with_mysql.txt", "-f", "Kubernetes"],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "serverReadyAction": {
