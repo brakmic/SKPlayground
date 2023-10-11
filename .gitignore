@@ -5,4 +5,8 @@ bin
 output.txt
 .DS_Store
 appsettings.dev.json
-config/
+appsettings.json
+
+# Jupyter Notebook Checkpoints
+notebooks/.ipynb_checkpoints/
+
