@@ -22,7 +22,7 @@ This repository serves as a companion to a series of articles discussing the int
 │   ├── action_planner
 │   │   ├── create_html_doc.txt
 │   │   ├── download_document.txt
-│   │   ├── find_url.txt
+│   │   └── find_url.txt
 │   ├── dotnet_project.txt
 │   ├── keycloak_helm_chart.txt
 │   ├── keycloak_prod_with_mysql.txt
