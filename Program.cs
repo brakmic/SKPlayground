@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.CommandLine;
+﻿using System.CommandLine;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -11,6 +10,7 @@ using Microsoft.SemanticKernel.SemanticFunctions;
 using SkPlayground.Plugins;
 using static Microsoft.SemanticKernel.SemanticFunctions.PromptTemplateConfig;
 using SkPlayground.Extensions;
+using Microsoft.SemanticKernel.Planners;
 
 namespace SkPlayground;
 class Program
@@ -40,10 +40,10 @@ class Program
         };
 
     rootCommand.SetHandler(
-        //Run,
+        Run,
         //RunWithActionPlanner,
         //RunWithSequentialPlanner,
-        RunWithHooks, /* this example uses the native function "ExecuteGet" from HttpPlugin */
+        //RunWithHooks, /* this example uses the native function "ExecuteGet" from HttpPlugin */
         //RunWithHooks2, /* this example uses a semantic function and the Markdown converter function */
         fileOption, functionOption
     );
@@ -74,7 +74,7 @@ class Program
       var pluginDirectories = Configuration.GetSection("SkillSettings:Plugins").Get<string[]>();
 
       var skillsRoot = Path.Combine(Directory.GetCurrentDirectory(), rootDirectory!);
-      var skillImport = kernel.ImportSemanticSkillFromDirectory(skillsRoot, pluginDirectories!);
+      var skillImport = kernel.ImportSemanticFunctionsFromDirectory(skillsRoot, pluginDirectories!);
 
       string description = await File.ReadAllTextAsync(file.FullName);
       var context = new ContextVariables();
@@ -83,7 +83,7 @@ class Program
       context.Set(key, description);
 
       var result = await kernel.RunAsync(context, skillImport[function]);
-      Console.WriteLine(result);
+      Console.WriteLine(result.GetValue<string>());
     }
   }
   private static async Task RunWithActionPlanner(FileInfo file, string function)
@@ -110,9 +110,9 @@ class Program
       var pluginDirectories = Configuration.GetSection("SkillSettings:Plugins").Get<string[]>();
 
       var skillsRoot = Path.Combine(Directory.GetCurrentDirectory(), rootDirectory!);
-      var skillImport = kernel.ImportSemanticSkillFromDirectory(skillsRoot, pluginDirectories!);
+      var skillImport = kernel.ImportSemanticFunctionsFromDirectory(skillsRoot, pluginDirectories!);
 
-      var httpPlugin = kernel.ImportSkill(new HttpPlugin(), nameof(HttpPlugin));
+      var httpPlugin = kernel.ImportFunctions(new HttpPlugin(), nameof(HttpPlugin));
 
       var planner = new ActionPlanner(kernel);
       var ask = await File.ReadAllTextAsync(file.FullName);
@@ -120,9 +120,9 @@ class Program
 
       Console.WriteLine($"\nPLAN:\n{plan.ToSafePlanString()}");
 
-      var result = await plan.InvokeAsync();
+      var result = await plan.InvokeAsync(kernel.CreateNewContext());
 
-      Console.WriteLine($"\nRESULT: {result}");
+      Console.WriteLine($"\nRESULT: {result.GetValue<string>()}");
     }
   }
 
@@ -149,9 +149,9 @@ class Program
       var pluginDirectories = Configuration.GetSection("SkillSettings:Plugins").Get<string[]>();
 
       var skillsRoot = Path.Combine(Directory.GetCurrentDirectory(), rootDirectory!);
-      var skillImport = kernel.ImportSemanticSkillFromDirectory(skillsRoot, pluginDirectories!);
-      var keyGenPlugin = kernel.ImportSkill(new KeyAndCertGenerator(), nameof(KeyAndCertGenerator));
-      var secretsPlugin = kernel.ImportSkill(new SecretYamlUpdater(), nameof(SecretYamlUpdater));
+      var skillImport = kernel.ImportSemanticFunctionsFromDirectory(skillsRoot, pluginDirectories!);
+      var keyGenPlugin = kernel.ImportFunctions(new KeyAndCertGenerator(), nameof(KeyAndCertGenerator));
+      var secretsPlugin = kernel.ImportFunctions(new SecretYamlUpdater(), nameof(SecretYamlUpdater));
 
       var planner = new SequentialPlanner(kernel);
       var ask = await File.ReadAllTextAsync(file.FullName);
@@ -159,9 +159,9 @@ class Program
 
       Console.WriteLine($"\nPLAN:\n{plan.ToSafePlanString()}");
 
-      var result = await plan.InvokeAsync();
+      var result = await plan.InvokeAsync(kernel.CreateNewContext());
 
-      Console.WriteLine($"\nRESULT: {result}");
+      Console.WriteLine($"\nRESULT: {result.GetValue<string>()}");
     }
   }
 
@@ -187,7 +187,7 @@ class Program
     if (kernelSettings.EndpointType == EndpointTypes.TextCompletion)
     {
       // import the plugin that contains native functions for sending http queries
-      var httpPlugin = kernel.ImportSkill(new HttpPlugin(), nameof(HttpPlugin));
+      var httpPlugin = kernel.ImportFunctions(new HttpPlugin(), nameof(HttpPlugin));
 
       // configure hooks
       kernel.FunctionInvoking += OnFunctionInvoking;
@@ -197,11 +197,10 @@ class Program
       // "The Development of the C Language"
       // that is located here:
       var ask = "https://www.bell-labs.com/usr/dmr/www/chist.html";
-
       // We send our ASK to the Kernel
-      var result = await kernel.RunAsync(ask, httpPlugin.ToImmutableDictionary()["ExecuteGet"]);
+      var result = await kernel.RunAsync(ask, httpPlugin["ExecuteGet"]);
 
-      Console.WriteLine($"\nRESULT: {result}");
+      Console.WriteLine($"\nRESULT: {result.GetValue<string>()}");
     }
   }
 
@@ -232,14 +231,6 @@ class Program
         Schema = 1,
         Type = "completion",
         Description = "Ask something about a person",
-        Completion =
-        {
-            MaxTokens = 1000,
-            Temperature = 0.5,
-            TopP = 0.0,
-            PresencePenalty = 0.0,
-            FrequencyPenalty = 0.0
-        },
         Input =
         {
             Parameters = new List<InputParameter>
