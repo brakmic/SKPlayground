@@ -8,5 +8,5 @@ appsettings.dev.json
 appsettings.json
 
 # Jupyter Notebook Checkpoints
-.notebooks/.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
 
