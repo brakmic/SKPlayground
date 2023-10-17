@@ -358,7 +358,7 @@ class Program
 
     // await foreach (var r in lookup)
     // {
-    //   Console.WriteLine("Memory with key 'id': " + r.Metadata.Text ?? "ERROR: memory not found");
+    //   Console.WriteLine("Answer: " + r.Metadata.Text ?? "ERROR: memory not found");
     // }
     //return;
 
