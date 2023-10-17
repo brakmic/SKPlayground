@@ -348,5 +348,8 @@ Additionally, this workflow is equally applicable when utilizing the `Kubernetes
 
 ![jupyter_notebook_demo](./gifs/jupyter_notebook_demo.gif)
 
+# Retrieval Augmented Generation (RAG)
+
+![using_rag](./gifs/using_rag.gif)
 ### LICENSE
 [MIT](./LICENSE.md)
