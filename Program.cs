@@ -213,6 +213,7 @@ class Program
       Console.WriteLine($"\nRESULT: {result.GetValue<string>()}");
     }
   }
+
   private static async Task RunWithHooks2(FileInfo file, string function)
   {
     #region Kernel Setup
@@ -237,9 +238,11 @@ class Program
       // this is the "config.json" of our semantic function
       var promptConfig = new PromptTemplateConfig
       {
+#pragma warning disable 618
         Schema = 1,
         Type = "completion",
         Description = "Ask something about a person",
+#pragma warning restore 618
         Input =
         {
             Parameters = new List<InputParameter>
