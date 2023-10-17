@@ -41,7 +41,7 @@ This repository serves as a companion to a series of articles discussing the int
 │
 ├── scripts
 │   └── parse.sh
-├── skills
+├── plugins
 │   ├── Assistant
 │   ├── DevOps
 │   ├── Engineering
