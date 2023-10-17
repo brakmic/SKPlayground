@@ -12,3 +12,8 @@ notebooks/.ipynb_checkpoints/
 
 
 .fake
+
+weaviate_data
+qdrant_data
+.env
+*.sqlite
