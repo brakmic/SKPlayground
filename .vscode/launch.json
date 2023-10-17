@@ -149,6 +149,33 @@
       "console": "internalConsole"
     },
     {
+      "name": "RAG",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+      "args": [""],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "console": "internalConsole",
+      "justMyCode": false,
+      "symbolOptions": {
+        "searchPaths": [],
+        "searchMicrosoftSymbolServer": true,
+        "searchNuGetOrgSymbolServer": true
+      }
+    },
+    {
       "name": "Debug Run",
       "type": "coreclr",
       "request": "launch",
