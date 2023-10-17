@@ -5,9 +5,10 @@ This project leverages the power of the Microsoft [Semantic Kernel](https://gith
 ## Companion Article Series
 This repository serves as a companion to a series of articles discussing the integration and utilization of Semantic Kernel. These articles provide deeper insights into the concepts and functionalities demonstrated in this repository.
 
-- [Intro to Semantic Kernel - Part One](https://blog.brakmic.com/intro-to-semantic-kernel-part-one/) 
+- [Intro to Semantic Kernel - Part One](https://blog.brakmic.com/intro-to-semantic-kernel-part-one) 
 - [Intro to Semantic Kernel - Part Two](https://blog.brakmic.com/intro-to-semantic-kernel-part-two/)
-- [Intro to Semantic Kernel - Part Three](https://blog.brakmic.com/intro-to-semantic-kernel-part-three/)
+- [Intro to Semantic Kernel - Part Three](https://blog.brakmic.com/intro-to-semantic-kernel-part-three)
+- [Intro to Semantic Kernel - Part Four](https://blog.brakmic.com/intro-to-semantic-kernel-part-four/)
 
 ## Project Structure
 
