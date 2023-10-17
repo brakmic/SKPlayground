@@ -340,16 +340,16 @@ Additionally, this workflow is equally applicable when utilizing the `Kubernetes
 
 ![sequential_planner_debugging](./gifs/sequential-planner_with_semantic-kernel.gif)
 
-## Hooks
+### Hooks
 
 ![sk_hooks](./gifs/sk_hooks.gif)
 
 
-# Jupyter Notebook
+### Jupyter Notebook
 
 ![jupyter_notebook_demo](./gifs/jupyter_notebook_demo.gif)
 
-# Retrieval Augmented Generation (RAG)
+### Retrieval Augmented Generation (RAG)
 
 ![using_rag](./gifs/using_rag.gif)
 ### LICENSE
