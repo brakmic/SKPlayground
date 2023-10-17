@@ -370,13 +370,43 @@ class Program
     // Console.WriteLine($"Answer: {result.GetValue<string>()}");
 
     // * 3. By using the RAG Pattern (Retrieval-augmented Generation)
-    var answer = await RunMiniRAG(textMemory, kernel, collection, "Tell me something about my hobbies.");
-    Console.WriteLine(answer);
+    //var answer = await RunMiniRAG(textMemory, kernel, collection, "Tell me something about my hobbies.");
+    // Console.WriteLine(answer);
+
+    await RunChat(textMemory, kernel, collection);
 
   }
 
-  private static async Task<string> RunMiniRAG(ISemanticTextMemory memory, IKernel kernel, string collectionName, string input)
+  private static async Task RunChat(ISemanticTextMemory textMemory, IKernel kernel, string collection)
   {
+    string input = string.Empty;
+    while (true)
+    {
+      Console.Write("User: ");
+      input = Console.ReadLine()!;
+
+      var answer = await ApplyRAG(textMemory, kernel, collection, input);
+      Console.WriteLine($"Assistant: {answer}");
+
+      // Exit conditions
+      if (input.Equals("exit", StringComparison.OrdinalIgnoreCase) ||
+          input.Equals("quit", StringComparison.OrdinalIgnoreCase))
+      {
+        break;
+      }
+    }
+  }
+
+  private static async Task<string> ApplyRAG(ISemanticTextMemory memory, IKernel kernel, string collectionName, string input)
+  {
+
+    // Exit conditions
+    if (input.Equals("exit", StringComparison.OrdinalIgnoreCase) ||
+        input.Equals("quit", StringComparison.OrdinalIgnoreCase))
+    {
+      return "Goodbye!";
+    }
+
     var context = kernel.CreateNewContext();
     context.Variables.Add("user_input", input);
 
