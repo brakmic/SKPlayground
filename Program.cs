@@ -372,7 +372,7 @@ class Program
     // });
     // Console.WriteLine($"Answer: {result.GetValue<string>()}");
 
-    // * 3. By using the RAG Pattern (Retrieval-augmented Generation)
+    // * 3. By using the RAG Pattern (Retrieval Augmented Generation)
     //var answer = await RunMiniRAG(textMemory, kernel, collection, "Tell me something about my hobbies.");
     // Console.WriteLine(answer);
 
@@ -426,7 +426,7 @@ class Program
     var func = kernel.Functions.GetFunction("Assistant", "Chat");
     var answer = await kernel.RunAsync(func, context.Variables);
 
-    return answer.GetValue<string>()!;
+    return answer.GetValue<string>()!.Trim();
 
   }
 
