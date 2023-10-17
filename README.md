@@ -34,11 +34,14 @@ This repository serves as a companion to a series of articles discussing the int
 │   └── typescript_nestjs_project.txt
 │
 ├── notebooks
-│   └── demo1.ipynb
+│   ├── demo1.ipynb
+|   ├── demo1_v1.0.0-beta1.ipynb
+|   └── demo_rag.ipynb
 │
 ├── scripts
 │   └── parse.sh
 ├── skills
+│   ├── Assistant
 │   ├── DevOps
 │   ├── Engineering
 │   ├── Html
@@ -50,6 +53,9 @@ This repository serves as a companion to a series of articles discussing the int
 
 ## Core Features
 SkPlayground is built on C# and [.NET 7](https://dotnet.microsoft.com/en-us/download), using [Semantic Kernel](https://www.nuget.org/packages/Microsoft.SemanticKernel/) from Microsoft. It is equipped with several plugins:
+
+### Assistant Plugin:
+- **Chat**: A chat functionality capable of interfacing with memory sourced externally from vector or SQL databases.
 
 ### DevOps Plugin:
 - **Kubernetes**: Generates YAML files based on user descriptions to complete specific tasks.
@@ -169,6 +175,7 @@ Here's an example configuration:
   "SkillSettings": {
     "Root": "skills",
     "Plugins": [
+      "Assistant",
       "DevOps",
       "Engineering",
       "Html",
