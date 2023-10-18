@@ -33,7 +33,7 @@ public class SecretYamlUpdater
     /// <exception cref="InvalidOperationException"></exception>
     private string UpdateKubernetesSecretYamlContent(string yamlContent, string base64Key, string base64Cert)
     {
-        Console.WriteLine($"\nINPUT: {yamlContent}\n");
+        // Console.WriteLine($"\nINPUT:\n{yamlContent}\n");
 
         // Define a regex pattern to isolate the data: section
         var dataSectionRegex = new Regex(@"\bdata:(?:[^\n]*\n)((?:[ \t].*\n?)*)", RegexOptions.Compiled);
