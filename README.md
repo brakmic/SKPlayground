@@ -1,6 +1,29 @@
-Welcome to SK Playground! 
+## Welcome to SK Playground! 
 
 This project leverages the power of the Microsoft [Semantic Kernel](https://github.com/microsoft/semantic-kernel/tree/main) to interact with the [OpenAI](https://openai.com/) API.
+
+- [Companion Article Series](#companion-article-series)
+- [Project Structure](#project-structure)
+- [Core Features](#core-features)
+  - [Assistant Plugin](#assistant-plugin)
+  - [DevOps Plugin](#devops-plugin)
+  - [Engineering Plugin](#engineering-plugin)
+  - [Html Plugin](#html-plugin)
+  - [Http Plugin](#http-plugin)
+  - [KeyAndCertGenerator Plugin](#keyandcertgenerator-plugin)
+  - [SecretYamlGenerator Plugin](#secretyamlgenerator-plugin)
+  - [SecretYamlUpdater](#secretyamlupdater)
+- [Usage Examples](#usage-examples)
+- [Input Files](#input-files)
+- [Skill and Plugin Organization](#skill-and-plugin-organization)
+  - [Configuration via `appsettings.plugins.json`](#configuration-via-appsettingspluginsjson)
+  - [Configuration via `appsettings.json`](#configuration-via-appsettingsjson)
+- [Jupyter Notebook Environment](#jupyter-notebook-environment)
+  - [Getting Started with Jupyter Notebooks](#getting-started-with-jupyter-notebooks)
+  - [Working with Libraries and Dependencies in C# Notebooks](#working-with-libraries-and-dependencies-in-c-notebooks)
+- [Scripts Usage](#scripts-usage)
+- [Showroom](#showroom)
+- [LICENSE](#license)
 
 ## Companion Article Series
 This repository serves as a companion to a series of articles discussing the integration and utilization of Semantic Kernel. These articles provide deeper insights into the concepts and functionalities demonstrated in this repository.
@@ -55,35 +78,37 @@ This repository serves as a companion to a series of articles discussing the int
 ## Core Features
 SkPlayground is built on C# and [.NET 7](https://dotnet.microsoft.com/en-us/download), using [Semantic Kernel](https://www.nuget.org/packages/Microsoft.SemanticKernel/) from Microsoft. It is equipped with several plugins:
 
-### Assistant Plugin:
+#### Assistant Plugin:
 - **Chat**: A chat functionality capable of interfacing with memory sourced externally from vector or SQL databases.
 
-### DevOps Plugin:
+#### DevOps Plugin:
 - **Kubernetes**: Generates YAML files based on user descriptions to complete specific tasks.
 - **Helm**: Creates Helm v3 Charts as per user specifications.
 
-### Engineering Plugin:
+#### Engineering Plugin:
 - **TypeScript**: Generates a README.md with a detailed description and source codes for building NodeJS projects based on TypeScript.
 - **CSharp**: Generates a README.md with a detailed description and source codes for building .NET projects based on C#.
 
-## Html Plugin:
+#### Html Plugin:
 - **CreateHtmlDoc**: Generate a HTML file
 - **ExtractJS**: Extract embedded JavaScript from a HTML document.
 
-## Http Plugin:
+#### Http Plugin:
 - **ExecuteGetAsync**: Execute a GET request.
 - **ExecutePostAsync**: Execute a POST request.
 - **ExecutePutAsync**: Execute a PUT request.
 
-## KeyAndCertGenerator Plugin:
+#### KeyAndCertGenerator Plugin:
 - **GenerateBase64KeyAndCert**: Create a base64-encoded private key and certificate.
 - **Extract**: Extract key or certificate from a base64-encoded string.
 
-## SecretYamlGenerator Plugin:
+#### SecretYamlGenerator Plugin:
 - **CreateSecretYaml**: Create a Kubernetes Secret YAML file.
 
-## SecretYamlUpdater:
+#### SecretYamlUpdater:
 - **UpdateKubernetesSecretYamlString**: Update the data section of a Kubernetes Secret YAML.
+
+
 ## Usage Examples
 
 The program can be executed via the command line using the `dotnet run` command, along with specifying two arguments: `-i` (or `--input`) for the input file, and `-f` (or `--function`) for the function to be executed. The input file should contain a description of the task, and the function argument should specify which function to run.
@@ -103,7 +128,7 @@ The program can be executed via the command line using the `dotnet run` command,
 
 Here are some examples:
 
-### 1. Generating C# Project README:
+#### Generating C# Project README:
 
 This command reads the description from the `dotnet_project.txt` file and executes the `CSharp` function to generate a README for a C# project:
 
@@ -111,7 +136,7 @@ This command reads the description from the `dotnet_project.txt` file and execut
 dotnet run -- -i ./desc/dotnet_project.txt -f CSharp
 ```
 
-### 2. Generating TypeScript Project README:
+#### Generating TypeScript Project README:
 
 Assuming there's a `typescript_project.txt` file with the appropriate description, you can generate a README for a TypeScript project as follows:
 
@@ -119,7 +144,7 @@ Assuming there's a `typescript_project.txt` file with the appropriate descriptio
 dotnet run -- -i ./desc/typescript_project.txt -f TypeScript
 ```
 
-### 3. Generating Kubernetes YAML:
+#### Generating Kubernetes YAML:
 
 If you have a description for a Kubernetes setup in a file called `kubernetes_desc.txt`, you can generate the necessary YAML files using the following command:
 
@@ -127,7 +152,7 @@ If you have a description for a Kubernetes setup in a file called `kubernetes_de
 dotnet run -- -i ./desc/kubernetes_desc.txt -f Kubernetes
 ```
 
-### 4. Generating Helm Charts for Keycloak Deployment:
+#### Generating Helm Charts for Keycloak Deployment:
 
 Given a description in a file named `keycloak_helm_desc.txt`, you can generate Helm v3 Charts for a Keycloak deployment like this:
 
@@ -135,18 +160,18 @@ Given a description in a file named `keycloak_helm_desc.txt`, you can generate H
 dotnet run -- -i ./desc/keycloak_helm_desc.txt -f Helm
 ```
 
-### Note:
+#### Note:
 Ensure that the necessary plugins are correctly placed under the "skills" directory and that the descriptions in the input files are well-formatted to get the desired outputs.
 
 ## Input Files
 Input files are housed in the `desc` folder and contain descriptions provided by the user. Here are a few examples:
 
-### Hashing Application in C# 1:
+#### Hashing Application in C# 1:
 ```plaintext
 Create an application that takes a string, hashes it with SHA256, and then returns that hash back to the user.
 ```
 
-### Deploy a Keycloak Helm Chart 2:
+#### Deploy a Keycloak Helm Chart 2:
 ```plaintext
 Deploy latest available version of Keycloak (quarkus-based variant) that meets the following criteria:
 - uses an external PostgreSQL instance created by another Helm Chart
@@ -155,17 +180,17 @@ Deploy latest available version of Keycloak (quarkus-based variant) that meets t
 - creates a realm named "test-realm"
 ```
 
-### Deploy Keycloak in Prod Mode to Kubernetes:
+#### Deploy Keycloak in Prod Mode to Kubernetes:
 ```plaintext
 Deploy keycloak (quarkus variant) that uses mysql as its backend.
 Keycloak runs in prod mode and is TLS secured with a self-signed certificate.
 Use images from bitnami.
 ```
 
-### Skill and Plugin Organization
+## Skill and Plugin Organization
 The functions are organized into either "DevOps" or "Engineering" plugins under the `skills` folder. A plugin is a collection of one or more functions. Each function contains a `config.json` and `skprompt.txt` file for configuration and prompt setup respectively.
 
-### Configuration via `appsettings.plugins.json`
+#### Configuration via `appsettings.plugins.json`
 
 The program's behavior can be tailored using the `appsettings.plugins.json` configuration file. This file is read at the start of the application, allowing you to specify the location of the skills folder as well as the available plugins.
 
@@ -197,7 +222,7 @@ In this configuration:
 
 This setup allows a flexible structure, enabling you to organize your skills and plugins as per your project's requirements. You can change the `Root` and `Plugins` settings in the `appsettings.plugins.json` file to point to different directories or to include different sets of plugins, without needing to modify the program's source code.
 
-### Configuration via `appsettings.json`
+#### Configuration via `appsettings.json`
 
 Additionally, there's a configuration file named `appsettings.json.example` located in the `config` directory. This file is essential for the correct operation of the application, as it contains configurations for the GPT model, service type, and your API key, among other settings.
 
@@ -242,11 +267,11 @@ Repeat the above command for each configuration setting you'd like to store as a
 
 Once these steps are completed, the program will be able to read the configuration values from the user secrets and use the specified configurations to interact with the OpenAI GPT model without exposing sensitive data in the `appsettings.json` file.
 
-### Jupyter Notebook Environment
+## Jupyter Notebook Environment
 
 This project incorporates a Jupyter Notebook environment, allowing for an interactive and dynamic approach to executing and testing code snippets in a live, document-based setting. The `notebooks` directory houses all the Jupyter notebooks related to this project.
 
-### Getting Started with Jupyter Notebooks
+#### Getting Started with Jupyter Notebooks
 
 1. **Installing Jupyter Notebook Environment**:
     - Ensure you have .NET Interactive installed. Run the following command:
@@ -270,17 +295,17 @@ This project incorporates a Jupyter Notebook environment, allowing for an intera
     This will open the Jupyter Notebook interface in your web browser, where you can navigate to the `notebooks` directory and open the notebook of your choice.
 
 
-### Working with Libraries and Dependencies in C# Notebooks
+#### Working with Libraries and Dependencies in C# Notebooks
 
 In C# Jupyter Notebooks, you can load libraries and dependencies using the `#r "nuget:..."` directive. For instance, to load the `Microsoft.Extensions.Configuration.Json` library, use the following command:
 ```csharp
 #r "nuget:Microsoft.Extensions.Configuration.Json,7.0.0"
 ```
-### Scripts Usage
+## Scripts Usage
 
 Inside the `scripts` directory, you will find the script `parse.sh`. This script is designed to process the output generated by the `DevOps` plugin functions `Helm` and `Kubernetes`.
 
-### Helm Function Output Processing:
+#### Helm Function Output Processing:
 When processing the output of the `Helm` function, the script helps in generating the Helm charts. It creates the required directories, YAML files, and other necessary items for a Helm chart. Once generated, these Helm charts can be applied using the Helm tool with the following command:
 
 ```bash
@@ -290,14 +315,15 @@ helm install [CHART] [NAME] --namespace [NAMESPACE]
 - `[NAME]`: A name you choose for this release of the chart.
 - `[NAMESPACE]`: The namespace in which to install the chart. 
 
-### Kubernetes Function Output Processing:
+#### Kubernetes Function Output Processing:
 On the other hand, when processing the output of the `Kubernetes` function, the script creates all the necessary YAML files for Kubernetes resources. Once the YAML files are generated, they can be applied to your Kubernetes cluster using the `kubectl` command like so:
 
 ```bash
 kubectl apply -f [FILENAME]
 ```
 - `[FILENAME]`: The path to the generated YAML file or directory containing the YAML files.
-### Practice: Generating a Helm Chart
+
+#### Practice: Generating a Helm Chart
 
 This project facilitates the creation of Helm charts through a straightforward process. Here is a step-by-step walkthrough of generating a Helm chart using the `Helm` function of the `DevOps` plugin:
 
@@ -333,19 +359,20 @@ Additionally, this workflow is equally applicable when utilizing the `Kubernetes
 
 ## Showroom
 
-### Action Planner
+#### Action Planner
 
 ![action_planner_debugging](./gifs/action_planner.gif)
-### Sequential Planner
+
+#### Sequential Planner
 
 ![sequential_planner_debugging](./gifs/sequential-planner_with_semantic-kernel.gif)
 
-### Hooks
+#### Hooks
 
 ![sk_hooks](./gifs/sk_hooks.gif)
 
 
-### Jupyter Notebook
+#### Jupyter Notebook
 
 ![jupyter_notebook_demo](./gifs/jupyter_notebook_demo.gif)
 
