@@ -2,28 +2,45 @@
 
 This project leverages the power of the Microsoft [Semantic Kernel](https://github.com/microsoft/semantic-kernel/tree/main) to interact with the [OpenAI](https://openai.com/) API.
 
+- [Welcome to SK Playground!](#welcome-to-sk-playground)
 - [Companion Article Series](#companion-article-series)
 - [Project Structure](#project-structure)
 - [Core Features](#core-features)
-  - [Assistant Plugin](#assistant-plugin)
-  - [DevOps Plugin](#devops-plugin)
-  - [Engineering Plugin](#engineering-plugin)
-  - [Html Plugin](#html-plugin)
-  - [Http Plugin](#http-plugin)
-  - [KeyAndCertGenerator Plugin](#keyandcertgenerator-plugin)
-  - [SecretYamlGenerator Plugin](#secretyamlgenerator-plugin)
-  - [SecretYamlUpdater](#secretyamlupdater)
+    - [Assistant Plugin:](#assistant-plugin)
+    - [DevOps Plugin:](#devops-plugin)
+    - [Engineering Plugin:](#engineering-plugin)
+    - [Html Plugin:](#html-plugin)
+    - [Http Plugin:](#http-plugin)
+    - [KeyAndCertGenerator Plugin:](#keyandcertgenerator-plugin)
+    - [SecretYamlGenerator Plugin:](#secretyamlgenerator-plugin)
+    - [SecretYamlUpdater:](#secretyamlupdater)
 - [Usage Examples](#usage-examples)
+    - [Generating C# Project README:](#generating-c-project-readme)
+    - [Generating TypeScript Project README:](#generating-typescript-project-readme)
+    - [Generating Kubernetes YAML:](#generating-kubernetes-yaml)
+    - [Generating Helm Charts for Keycloak Deployment:](#generating-helm-charts-for-keycloak-deployment)
+    - [Note:](#note)
 - [Input Files](#input-files)
+    - [Hashing Application in C# 1:](#hashing-application-in-c-1)
+    - [Deploy a Keycloak Helm Chart 2:](#deploy-a-keycloak-helm-chart-2)
+    - [Deploy Keycloak in Prod Mode to Kubernetes:](#deploy-keycloak-in-prod-mode-to-kubernetes)
 - [Skill and Plugin Organization](#skill-and-plugin-organization)
-  - [Configuration via `appsettings.plugins.json`](#configuration-via-appsettingspluginsjson)
-  - [Configuration via `appsettings.json`](#configuration-via-appsettingsjson)
+    - [Configuration via `appsettings.plugins.json`](#configuration-via-appsettingspluginsjson)
+    - [Configuration via `appsettings.json`](#configuration-via-appsettingsjson)
 - [Jupyter Notebook Environment](#jupyter-notebook-environment)
-  - [Getting Started with Jupyter Notebooks](#getting-started-with-jupyter-notebooks)
-  - [Working with Libraries and Dependencies in C# Notebooks](#working-with-libraries-and-dependencies-in-c-notebooks)
+    - [Getting Started with Jupyter Notebooks](#getting-started-with-jupyter-notebooks)
+    - [Working with Libraries and Dependencies in C# Notebooks](#working-with-libraries-and-dependencies-in-c-notebooks)
 - [Scripts Usage](#scripts-usage)
+    - [Helm Function Output Processing:](#helm-function-output-processing)
+    - [Kubernetes Function Output Processing:](#kubernetes-function-output-processing)
+    - [Practice: Generating a Helm Chart](#practice-generating-a-helm-chart)
 - [Showroom](#showroom)
-- [LICENSE](#license)
+    - [Action Planner](#action-planner)
+    - [Sequential Planner](#sequential-planner)
+    - [Hooks](#hooks)
+    - [Jupyter Notebook](#jupyter-notebook)
+  - [Retrieval Augmented Generation (RAG)](#retrieval-augmented-generation-rag)
+  - [LICENSE](#license)
 
 ## Companion Article Series
 This repository serves as a companion to a series of articles discussing the integration and utilization of Semantic Kernel. These articles provide deeper insights into the concepts and functionalities demonstrated in this repository.
@@ -40,8 +57,10 @@ This repository serves as a companion to a series of articles discussing the int
 ├── SkPlayground.csproj
 ├── SkPlayground.sln
 ├── appsettings.plugins.json
+│
 ├── config
 │   └── appsettings.json.example
+│
 ├── desc
 │   ├── action_planner
 │   │   ├── create_html_doc.txt
@@ -59,11 +78,12 @@ This repository serves as a companion to a series of articles discussing the int
 │
 ├── notebooks
 │   ├── demo1.ipynb
-|   ├── demo1_v1.0.0-beta1.ipynb
-|   └── demo_rag.ipynb
+│   ├── demo1_v1.0.0-beta1.ipynb
+│   └── demo_rag.ipynb
 │
 ├── scripts
 │   └── parse.sh
+│
 ├── plugins
 │   ├── Assistant
 │   ├── DevOps
