@@ -53,10 +53,10 @@ class Program
     rootCommand.SetHandler(
         //Run,
         //RunWithActionPlanner,
-        //RunWithSequentialPlanner,
+        RunWithSequentialPlanner,
         //RunWithHooks, /* this example uses the native function "ExecuteGet" from HttpPlugin */
         //RunWithHooks2, /* this example uses a semantic function and the Markdown converter function */
-        RunWithRag,
+        //RunWithRag,
         fileOption, functionOption
     );
 
@@ -134,7 +134,7 @@ class Program
 
       var result = await plan.InvokeAsync(kernel.CreateNewContext());
 
-      Console.WriteLine($"\nRESULT: {result.GetValue<string>()}");
+      Console.WriteLine($"\nRESULT:\n{result.GetValue<string>()}");
     }
   }
   private static async Task RunWithSequentialPlanner(FileInfo file, string function)
@@ -172,7 +172,7 @@ class Program
 
       var result = await plan.InvokeAsync(kernel.CreateNewContext());
 
-      Console.WriteLine($"\nRESULT: {result.GetValue<string>()}");
+      Console.WriteLine($"\nRESULT:\n{result.GetValue<string>()}");
     }
   }
   private static async Task RunWithHooks(FileInfo file, string function)
@@ -210,7 +210,7 @@ class Program
       // We send our ASK to the Kernel
       var result = await kernel.RunAsync(ask, httpPlugin["ExecuteGet"]);
 
-      Console.WriteLine($"\nRESULT: {result.GetValue<string>()}");
+      Console.WriteLine($"\nRESULT:\n{result.GetValue<string>()}");
     }
   }
 
@@ -274,7 +274,7 @@ class Program
       };
 
       // We send our ASK to the Kernel
-      var result = await kernel.RunAsync("Denis Ritchie", askAbutPerson);
+      var result = await kernel.RunAsync("Dennis Ritchie", askAbutPerson);
     }
   }
   private static async Task RunWithRag(FileInfo file, string function)
