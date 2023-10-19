@@ -389,7 +389,7 @@ Additionally, this workflow is equally applicable when utilizing the `Kubernetes
 In the original Semantic Kernel project, the `TextMemoryPlugin` provided a method named [SaveAsync](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/src/Plugins/Plugins.Memory/TextMemoryPlugin.cs#L148) to persist information into the database. However, it only allowed for saving a singular `input` argument, leaving the `description` and `additionalMetadata` fields in the database unfilled. In order to address this limitation, a new implementation named `TextMemoryExPlugin` has been introduced. This extended version enhances the `SaveAsync` method to accommodate and persist the two additional arguments: `description` and `additionalMetadata`. Here's a comparison of the old and new JSON database entries illustrating the improvement:
 
 Old JSON database entry:
-\```json
+```json
 {
   "is_reference": false,
   "external_source_name": "",
@@ -398,10 +398,10 @@ Old JSON database entry:
   "text": "I was born in Berlin.",
   "additional_metadata": ""
 }
-\```
+```
 
 New JSON database entry:
-\```json
+```json
 {
   "is_reference": false,
   "external_source_name": "",
@@ -410,11 +410,11 @@ New JSON database entry:
   "text": "I have a collection of vintage stamps.",
   "additional_metadata": "Item: Stamps"
 }
-\```
+```
 
 Below is the enhanced implementation of the `SaveAsync` method within the `TextMemoryExPlugin` class:
 
-\```csharp
+```csharp
 [SKFunction]
 [Description("Save information to semantic memory")]
 public async Task SaveAsync(
@@ -434,7 +434,7 @@ public async Task SaveAsync(
   loggerFactory?.CreateLogger(typeof(TextMemoryExPlugin)).LogDebug("Saving memory to collection '{0}'", collection);
   await _memory.SaveInformationAsync(collection, input, key, description, additionalMetadata, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 }
-\```
+```
 
 ## Showroom
 
