@@ -14,6 +14,7 @@ This project leverages the power of the Microsoft [Semantic Kernel](https://gith
     - [KeyAndCertGenerator Plugin:](#keyandcertgenerator-plugin)
     - [SecretYamlGenerator Plugin:](#secretyamlgenerator-plugin)
     - [SecretYamlUpdater:](#secretyamlupdater)
+    - [TextMemoryEx Plugin:](#textmemoryex-plugin)
 - [Usage Examples](#usage-examples)
     - [Generating C# Project README:](#generating-c-project-readme)
     - [Generating TypeScript Project README:](#generating-typescript-project-readme)
@@ -34,6 +35,8 @@ This project leverages the power of the Microsoft [Semantic Kernel](https://gith
     - [Helm Function Output Processing:](#helm-function-output-processing)
     - [Kubernetes Function Output Processing:](#kubernetes-function-output-processing)
     - [Practice: Generating a Helm Chart](#practice-generating-a-helm-chart)
+- [Extras](#extras)
+    - [TextMemoryEx Plugin](#textmemoryex-plugin-1)
 - [Showroom](#showroom)
     - [Action Planner](#action-planner)
     - [Sequential Planner](#sequential-planner)
@@ -128,6 +131,8 @@ SkPlayground is built on C# and [.NET 7](https://dotnet.microsoft.com/en-us/down
 #### SecretYamlUpdater:
 - **UpdateKubernetesSecretYamlString**: Update the data section of a Kubernetes Secret YAML.
 
+#### TextMemoryEx Plugin:
+- **SaveAsync**: modified method that accepts two new arguments: `description` and `additionalMetadata`.
 
 ## Usage Examples
 
@@ -376,6 +381,60 @@ This project facilitates the creation of Helm charts through a straightforward p
 This workflow streamlines the process of transforming human-readable descriptions into deployable Helm charts, showcasing the power and efficiency of automating DevOps tasks through the Semantic Kernel and OpenAI's capabilities integrated within this project.
 
 Additionally, this workflow is equally applicable when utilizing the `Kubernetes` function of the `DevOps` plugin. The parsing script (`parse.sh`) is designed to handle both Helm charts and pure Kubernetes YAML outputs seamlessly. When invoked with completions from the `Kubernetes` function, the script generates one or more Kubernetes YAML files instead, following the same directory structuring convention, making it a versatile tool for your DevOps automation tasks.
+
+## Extras
+
+#### TextMemoryEx Plugin
+
+In the original Semantic Kernel project, the `TextMemoryPlugin` provided a method named [SaveAsync](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/src/Plugins/Plugins.Memory/TextMemoryPlugin.cs#L148) to persist information into the database. However, it only allowed for saving a singular `input` argument, leaving the `description` and `additionalMetadata` fields in the database unfilled. In order to address this limitation, a new implementation named `TextMemoryExPlugin` has been introduced. This extended version enhances the `SaveAsync` method to accommodate and persist the two additional arguments: `description` and `additionalMetadata`. Here's a comparison of the old and new JSON database entries illustrating the improvement:
+
+Old JSON database entry:
+\```json
+{
+  "is_reference": false,
+  "external_source_name": "",
+  "id": "6295c180-edc5-453e-93f6-7919924868ba",
+  "description": "",
+  "text": "I was born in Berlin.",
+  "additional_metadata": ""
+}
+\```
+
+New JSON database entry:
+\```json
+{
+  "is_reference": false,
+  "external_source_name": "",
+  "id": "8820aa60-1b2d-411a-8476-85eac498f132",
+  "description": "Collections",
+  "text": "I have a collection of vintage stamps.",
+  "additional_metadata": "Item: Stamps"
+}
+\```
+
+Below is the enhanced implementation of the `SaveAsync` method within the `TextMemoryExPlugin` class:
+
+\```csharp
+[SKFunction]
+[Description("Save information to semantic memory")]
+public async Task SaveAsync(
+  [Description("The information to save")] string input,
+  [Description("Description")][DefaultValue(null)] string description,
+  [Description("Additional Metadata")][DefaultValue(null)] string additionalMetadata,
+  [SKName("collection")][Description("Memories collection associated with the information to save")][DefaultValue("generic")] string collection,
+  [SKName("key")][Description("The key associated with the information to save")] string key,
+  ILoggerFactory? loggerFactory, 
+  CancellationToken cancellationToken = default(CancellationToken)
+)
+{
+  if (string.IsNullOrWhiteSpace(collection) || string.IsNullOrWhiteSpace(key))
+  {
+    throw new Exception("collection and key must not be empty");
+  }
+  loggerFactory?.CreateLogger(typeof(TextMemoryExPlugin)).LogDebug("Saving memory to collection '{0}'", collection);
+  await _memory.SaveInformationAsync(collection, input, key, description, additionalMetadata, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
+}
+\```
 
 ## Showroom
 
