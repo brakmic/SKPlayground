@@ -53,10 +53,10 @@ class Program
     rootCommand.SetHandler(
         //Run,
         //RunWithActionPlanner,
-        RunWithSequentialPlanner,
+        //RunWithSequentialPlanner,
         //RunWithHooks, /* this example uses the native function "ExecuteGet" from HttpPlugin */
         //RunWithHooks2, /* this example uses a semantic function and the Markdown converter function */
-        //RunWithRag,
+        RunWithRag,
         fileOption, functionOption
     );
 
@@ -313,7 +313,7 @@ class Program
     //var memoryStore = new WeaviateMemoryStore(endpoint: "http://localhost:8080/v1", loggerFactory: loggerFactory);
     //var memoryStore = new VolatileMemoryStore();
     //var memoryStore = new QdrantMemoryStore("http://localhost:6333", 1536, loggerFactory: loggerFactory);
-    var memoryStore = await SqliteMemoryStore.ConnectAsync("memories.sqlite");
+    var memoryStore = await SqliteMemoryStore.ConnectAsync("memories2.sqlite");
 
     // Create an embedding generator to use for semantic memory.
     var embeddingGenerator = new OpenAITextEmbeddingGeneration(modelId: "text-embedding-ada-002", apiKey: kernelSettings.ApiKey,
@@ -331,7 +331,7 @@ class Program
     // Alternatively, one could use SemanticTextMemory instance instead
     //SemanticTextMemory textMemory = new(memoryStore, embeddingGenerator);
 
-    var memoryPlugin = new TextMemoryPlugin(textMemory);
+    var memoryPlugin = new TextMemoryPlugin(textMemory); // can be replaced with TextMemoryExPlugin
     var memoryFunctions = kernel.ImportFunctions(memoryPlugin, "MemoryPlugin");
 
     var collection = "aboutme";
@@ -447,7 +447,14 @@ class Program
       {
         [TextMemoryPlugin.CollectionParam] = collection,
         [TextMemoryPlugin.KeyParam] = fact.Id,
-        ["input"] = fact.Text
+        ["input"] = fact.Text,
+        // 
+        // only when TextMemoryExPlugin is in use
+        // *****
+        //["description"] = fact.Description, 
+        //["additionalMetadata"] = fact.AdditionalMetadata
+        // *****
+        //
       });
       results.Add(result);
     }
