@@ -13,8 +13,8 @@ This project leverages the power of the Microsoft [Semantic Kernel](https://gith
     - [Http Plugin:](#http-plugin)
     - [KeyAndCertGenerator Plugin:](#keyandcertgenerator-plugin)
     - [SecretYamlGenerator Plugin:](#secretyamlgenerator-plugin)
-    - [SecretYamlUpdater:](#secretyamlupdater)
-    - [TextMemoryEx Plugin:](#textmemoryex-plugin)
+    - [SecretYamlUpdater Plugin:](#secretyamlupdater-plugin)
+    - [TextMemoryEx Plugin (based on TextMemoryPlugin from SK):](#textmemoryex-plugin-based-on-textmemoryplugin-from-sk)
 - [Usage Examples](#usage-examples)
     - [Generating C# Project README:](#generating-c-project-readme)
     - [Generating TypeScript Project README:](#generating-typescript-project-readme)
@@ -36,7 +36,7 @@ This project leverages the power of the Microsoft [Semantic Kernel](https://gith
     - [Kubernetes Function Output Processing:](#kubernetes-function-output-processing)
     - [Practice: Generating a Helm Chart](#practice-generating-a-helm-chart)
 - [Extras](#extras)
-    - [TextMemoryEx Plugin](#textmemoryex-plugin-1)
+    - [TextMemoryEx Plugin](#textmemoryex-plugin)
 - [Showroom](#showroom)
     - [Action Planner](#action-planner)
     - [Sequential Planner](#sequential-planner)
@@ -95,7 +95,8 @@ This repository serves as a companion to a series of articles discussing the int
 │   ├── Http
 │   ├── KeyAndCertGenerator
 │   ├── SecretYamlGenerator
-│   └── SecretYamlUpdater
+│   ├── SecretYamlUpdater
+│   └── TextMemoryEx
 ```
 
 ## Core Features
@@ -128,11 +129,11 @@ SkPlayground is built on C# and [.NET 7](https://dotnet.microsoft.com/en-us/down
 #### SecretYamlGenerator Plugin:
 - **CreateSecretYaml**: Create a Kubernetes Secret YAML file.
 
-#### SecretYamlUpdater:
+#### SecretYamlUpdater Plugin:
 - **UpdateKubernetesSecretYamlString**: Update the data section of a Kubernetes Secret YAML.
 
-#### TextMemoryEx Plugin:
-- **SaveAsync**: modified method that accepts two new arguments: `description` and `additionalMetadata`.
+#### TextMemoryEx Plugin (based on TextMemoryPlugin from SK):
+- **SaveAsync**: accepts two additional arguments: `description` and `additionalMetadata`.
 
 ## Usage Examples
 
@@ -233,7 +234,8 @@ Here's an example configuration:
       "Http",
       "KeyAndCertGenerator",
       "SecretYamlGenerator",
-      "SecretYamlUpdater"
+      "SecretYamlUpdater",
+      "TextMemoryEx"
     ]
   }
 }
