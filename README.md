@@ -247,7 +247,7 @@ In this configuration:
 
 - **`Root`**: Specifies the location of the plugins folder relative to the project's root directory. By default, it's set to "plugins", but you can change it to reference a different folder.
   
-- **`Plugins`**: Specifies the available plugins, which are expected to be found within subdirectories of the specified plugins folder. In this case, the `DevOps` and `Engineering` plugins are available.
+- **`Plugins`**: Specifies the available plugins, which are expected to be found within subdirectories of the specified plugins folder.
 
 This setup allows a flexible structure, enabling you to organize your functions and plugins as per your project's requirements. You can change the `Root` and `Plugins` settings in the `appsettings.plugins.json` file to point to different directories or to include different sets of plugins, without needing to modify the program's source code.
 
