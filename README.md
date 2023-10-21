@@ -20,12 +20,12 @@ This project leverages the power of the Microsoft [Semantic Kernel](https://gith
     - [Generating TypeScript Project README:](#generating-typescript-project-readme)
     - [Generating Kubernetes YAML:](#generating-kubernetes-yaml)
     - [Generating Helm Charts for Keycloak Deployment:](#generating-helm-charts-for-keycloak-deployment)
-    - [Note:](#note)
+    - [Plugin Configuration](#plugin-configuration)
 - [Input Files](#input-files)
     - [Hashing Application in C# 1:](#hashing-application-in-c-1)
     - [Deploy a Keycloak Helm Chart 2:](#deploy-a-keycloak-helm-chart-2)
     - [Deploy Keycloak in Prod Mode to Kubernetes:](#deploy-keycloak-in-prod-mode-to-kubernetes)
-- [Skill and Plugin Organization](#skill-and-plugin-organization)
+- [Function and Plugin Organization](#function-and-plugin-organization)
     - [Configuration via `appsettings.plugins.json`](#configuration-via-appsettingspluginsjson)
     - [Configuration via `appsettings.json`](#configuration-via-appsettingsjson)
 - [Jupyter Notebook Environment](#jupyter-notebook-environment)
@@ -186,10 +186,12 @@ Given a description in a file named `keycloak_helm_desc.txt`, you can generate H
 dotnet run -- -i ./desc/keycloak_helm_desc.txt -f Helm
 ```
 
-#### Note:
-Ensure that the necessary plugins are correctly placed under the "skills" directory and that the descriptions in the input files are well-formatted to get the desired outputs.
+#### Plugin Configuration
+
+Ensure that the necessary plugins are correctly placed under the "plugins" directory and that the descriptions in the input files are well-formatted to get the desired outputs.
 
 ## Input Files
+
 Input files are housed in the `desc` folder and contain descriptions provided by the user. Here are a few examples:
 
 #### Hashing Application in C# 1:
@@ -213,19 +215,19 @@ Keycloak runs in prod mode and is TLS secured with a self-signed certificate.
 Use images from bitnami.
 ```
 
-## Skill and Plugin Organization
-The functions are organized into either "DevOps" or "Engineering" plugins under the `skills` folder. A plugin is a collection of one or more functions. Each function contains a `config.json` and `skprompt.txt` file for configuration and prompt setup respectively.
+## Function and Plugin Organization
+The functions are organized into either "DevOps" or "Engineering" plugins under the `plugins` folder. A plugin is a collection of one or more functions. Each function contains a `config.json` and `skprompt.txt` file for configuration and prompt setup respectively.
 
 #### Configuration via `appsettings.plugins.json`
 
-The program's behavior can be tailored using the `appsettings.plugins.json` configuration file. This file is read at the start of the application, allowing you to specify the location of the skills folder as well as the available plugins.
+The program's behavior can be tailored using the `appsettings.plugins.json` configuration file. This file is read at the start of the application, allowing you to specify the location of the plugins folder as well as the available plugins.
 
 Here's an example configuration:
 
 ```json
 {
-  "SkillSettings": {
-    "Root": "skills",
+  "PluginSettings": {
+    "Root": "plugins",
     "Plugins": [
       "Assistant",
       "DevOps",
@@ -243,11 +245,11 @@ Here's an example configuration:
 
 In this configuration:
 
-- **`Root`**: Specifies the location of the skills folder relative to the project's root directory. By default, it's set to "skills", but you can change it to reference a different folder.
+- **`Root`**: Specifies the location of the plugins folder relative to the project's root directory. By default, it's set to "plugins", but you can change it to reference a different folder.
   
-- **`Plugins`**: Specifies the available plugins, which are expected to be found within subdirectories of the specified skills folder. In this case, the `DevOps` and `Engineering` plugins are available.
+- **`Plugins`**: Specifies the available plugins, which are expected to be found within subdirectories of the specified plugins folder. In this case, the `DevOps` and `Engineering` plugins are available.
 
-This setup allows a flexible structure, enabling you to organize your skills and plugins as per your project's requirements. You can change the `Root` and `Plugins` settings in the `appsettings.plugins.json` file to point to different directories or to include different sets of plugins, without needing to modify the program's source code.
+This setup allows a flexible structure, enabling you to organize your functions and plugins as per your project's requirements. You can change the `Root` and `Plugins` settings in the `appsettings.plugins.json` file to point to different directories or to include different sets of plugins, without needing to modify the program's source code.
 
 #### Configuration via `appsettings.json`
 
