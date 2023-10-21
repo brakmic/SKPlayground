@@ -6,25 +6,25 @@ This project leverages the power of the Microsoft [Semantic Kernel](https://gith
 - [Companion Article Series](#companion-article-series)
 - [Project Structure](#project-structure)
 - [Core Features](#core-features)
-    - [Assistant Plugin:](#assistant-plugin)
-    - [DevOps Plugin:](#devops-plugin)
-    - [Engineering Plugin:](#engineering-plugin)
-    - [Html Plugin:](#html-plugin)
-    - [Http Plugin:](#http-plugin)
-    - [KeyAndCertGenerator Plugin:](#keyandcertgenerator-plugin)
-    - [SecretYamlGenerator Plugin:](#secretyamlgenerator-plugin)
-    - [SecretYamlUpdater Plugin:](#secretyamlupdater-plugin)
-    - [TextMemoryEx Plugin (based on TextMemoryPlugin from SK):](#textmemoryex-plugin-based-on-textmemoryplugin-from-sk)
+    - [Assistant Plugin](#assistant-plugin)
+    - [DevOps Plugin](#devops-plugin)
+    - [Engineering Plugin](#engineering-plugin)
+    - [Html Plugin](#html-plugin)
+    - [Http Plugin](#http-plugin)
+    - [KeyAndCertGenerator Plugin](#keyandcertgenerator-plugin)
+    - [SecretYamlGenerator Plugin](#secretyamlgenerator-plugin)
+    - [SecretYamlUpdater Plugin](#secretyamlupdater-plugin)
+    - [TextMemoryEx Plugin (based on TextMemoryPlugin from SK)](#textmemoryex-plugin-based-on-textmemoryplugin-from-sk)
 - [Usage Examples](#usage-examples)
-    - [Generating C# Project README:](#generating-c-project-readme)
-    - [Generating TypeScript Project README:](#generating-typescript-project-readme)
-    - [Generating Kubernetes YAML:](#generating-kubernetes-yaml)
-    - [Generating Helm Charts for Keycloak Deployment:](#generating-helm-charts-for-keycloak-deployment)
+    - [Generating C# Project README](#generating-c-project-readme)
+    - [Generating TypeScript Project README](#generating-typescript-project-readme)
+    - [Generating Kubernetes YAML](#generating-kubernetes-yaml)
+    - [Generating Helm Charts for Keycloak Deployment](#generating-helm-charts-for-keycloak-deployment)
     - [Plugin Configuration](#plugin-configuration)
 - [Input Files](#input-files)
-    - [Hashing Application in C# 1:](#hashing-application-in-c-1)
-    - [Deploy a Keycloak Helm Chart 2:](#deploy-a-keycloak-helm-chart-2)
-    - [Deploy Keycloak in Prod Mode to Kubernetes:](#deploy-keycloak-in-prod-mode-to-kubernetes)
+    - [Hashing Application in C#](#hashing-application-in-c)
+    - [Deploy a Keycloak Helm Chart](#deploy-a-keycloak-helm-chart)
+    - [Deploy Keycloak in Prod Mode to Kubernetes](#deploy-keycloak-in-prod-mode-to-kubernetes)
 - [Function and Plugin Organization](#function-and-plugin-organization)
     - [Configuration via `appsettings.plugins.json`](#configuration-via-appsettingspluginsjson)
     - [Configuration via `appsettings.json`](#configuration-via-appsettingsjson)
@@ -32,8 +32,8 @@ This project leverages the power of the Microsoft [Semantic Kernel](https://gith
     - [Getting Started with Jupyter Notebooks](#getting-started-with-jupyter-notebooks)
     - [Working with Libraries and Dependencies in C# Notebooks](#working-with-libraries-and-dependencies-in-c-notebooks)
 - [Scripts Usage](#scripts-usage)
-    - [Helm Function Output Processing:](#helm-function-output-processing)
-    - [Kubernetes Function Output Processing:](#kubernetes-function-output-processing)
+    - [Helm Function Output Processing](#helm-function-output-processing)
+    - [Kubernetes Function Output Processing](#kubernetes-function-output-processing)
     - [Practice: Generating a Helm Chart](#practice-generating-a-helm-chart)
 - [Extras](#extras)
     - [TextMemoryEx Plugin](#textmemoryex-plugin)
@@ -102,37 +102,37 @@ This repository serves as a companion to a series of articles discussing the int
 ## Core Features
 SkPlayground is built on C# and [.NET 7](https://dotnet.microsoft.com/en-us/download), using [Semantic Kernel](https://www.nuget.org/packages/Microsoft.SemanticKernel/) from Microsoft. It is equipped with several plugins:
 
-#### Assistant Plugin:
+#### Assistant Plugin
 - **Chat**: A chat functionality capable of interfacing with memory sourced externally from vector or SQL databases.
 
-#### DevOps Plugin:
+#### DevOps Plugin
 - **Kubernetes**: Generates YAML files based on user descriptions to complete specific tasks.
 - **Helm**: Creates Helm v3 Charts as per user specifications.
 
-#### Engineering Plugin:
+#### Engineering Plugin
 - **TypeScript**: Generates a README.md with a detailed description and source codes for building NodeJS projects based on TypeScript.
 - **CSharp**: Generates a README.md with a detailed description and source codes for building .NET projects based on C#.
 
-#### Html Plugin:
+#### Html Plugin
 - **CreateHtmlDoc**: Generate a HTML file
 - **ExtractJS**: Extract embedded JavaScript from a HTML document.
 
-#### Http Plugin:
+#### Http Plugin
 - **ExecuteGetAsync**: Execute a GET request.
 - **ExecutePostAsync**: Execute a POST request.
 - **ExecutePutAsync**: Execute a PUT request.
 
-#### KeyAndCertGenerator Plugin:
+#### KeyAndCertGenerator Plugin
 - **GenerateBase64KeyAndCert**: Create a base64-encoded private key and certificate.
 - **Extract**: Extract key or certificate from a base64-encoded string.
 
-#### SecretYamlGenerator Plugin:
+#### SecretYamlGenerator Plugin
 - **CreateSecretYaml**: Create a Kubernetes Secret YAML file.
 
-#### SecretYamlUpdater Plugin:
+#### SecretYamlUpdater Plugin
 - **UpdateKubernetesSecretYamlString**: Update the data section of a Kubernetes Secret YAML.
 
-#### TextMemoryEx Plugin (based on TextMemoryPlugin from SK):
+#### TextMemoryEx Plugin (based on TextMemoryPlugin from SK)
 - **SaveAsync**: accepts two additional arguments: `description` and `additionalMetadata`.
 
 ## Usage Examples
@@ -154,7 +154,7 @@ The program can be executed via the command line using the `dotnet run` command,
 
 Here are some examples:
 
-#### Generating C# Project README:
+#### Generating C# Project README
 
 This command reads the description from the `dotnet_project.txt` file and executes the `CSharp` function to generate a README for a C# project:
 
@@ -162,7 +162,7 @@ This command reads the description from the `dotnet_project.txt` file and execut
 dotnet run -- -i ./desc/dotnet_project.txt -f CSharp
 ```
 
-#### Generating TypeScript Project README:
+#### Generating TypeScript Project README
 
 Assuming there's a `typescript_project.txt` file with the appropriate description, you can generate a README for a TypeScript project as follows:
 
@@ -170,7 +170,7 @@ Assuming there's a `typescript_project.txt` file with the appropriate descriptio
 dotnet run -- -i ./desc/typescript_project.txt -f TypeScript
 ```
 
-#### Generating Kubernetes YAML:
+#### Generating Kubernetes YAML
 
 If you have a description for a Kubernetes setup in a file called `kubernetes_desc.txt`, you can generate the necessary YAML files using the following command:
 
@@ -178,7 +178,7 @@ If you have a description for a Kubernetes setup in a file called `kubernetes_de
 dotnet run -- -i ./desc/kubernetes_desc.txt -f Kubernetes
 ```
 
-#### Generating Helm Charts for Keycloak Deployment:
+#### Generating Helm Charts for Keycloak Deployment
 
 Given a description in a file named `keycloak_helm_desc.txt`, you can generate Helm v3 Charts for a Keycloak deployment like this:
 
@@ -194,12 +194,12 @@ Ensure that the necessary plugins are correctly placed under the "plugins" direc
 
 Input files are housed in the `desc` folder and contain descriptions provided by the user. Here are a few examples:
 
-#### Hashing Application in C# 1:
+#### Hashing Application in C#
 ```plaintext
 Create an application that takes a string, hashes it with SHA256, and then returns that hash back to the user.
 ```
 
-#### Deploy a Keycloak Helm Chart 2:
+#### Deploy a Keycloak Helm Chart
 ```plaintext
 Deploy latest available version of Keycloak (quarkus-based variant) that meets the following criteria:
 - uses an external PostgreSQL instance created by another Helm Chart
@@ -208,7 +208,7 @@ Deploy latest available version of Keycloak (quarkus-based variant) that meets t
 - creates a realm named "test-realm"
 ```
 
-#### Deploy Keycloak in Prod Mode to Kubernetes:
+#### Deploy Keycloak in Prod Mode to Kubernetes
 ```plaintext
 Deploy keycloak (quarkus variant) that uses mysql as its backend.
 Keycloak runs in prod mode and is TLS secured with a self-signed certificate.
@@ -303,7 +303,7 @@ This project incorporates a Jupyter Notebook environment, allowing for an intera
 
 #### Getting Started with Jupyter Notebooks
 
-1. **Installing Jupyter Notebook Environment**:
+1. **Installing Jupyter Notebook Environment**
     - Ensure you have .NET Interactive installed. Run the following command:
         ```bash
         dotnet tool install --global Microsoft.dotnet-interactive
@@ -317,7 +317,7 @@ This project incorporates a Jupyter Notebook environment, allowing for an intera
         cd path/to/SkPlayground
         ```
 
-2. **Launching Jupyter Notebook**:
+2. **Launching Jupyter Notebook**
     - Launch Jupyter Notebook:
         ```bash
         jupyter notebook
@@ -335,7 +335,7 @@ In C# Jupyter Notebooks, you can load libraries and dependencies using the `#r "
 
 Inside the `scripts` directory, you will find the script `parse.sh`. This script is designed to process the output generated by the `DevOps` plugin functions `Helm` and `Kubernetes`.
 
-#### Helm Function Output Processing:
+#### Helm Function Output Processing
 When processing the output of the `Helm` function, the script helps in generating the Helm charts. It creates the required directories, YAML files, and other necessary items for a Helm chart. Once generated, these Helm charts can be applied using the Helm tool with the following command:
 
 ```bash
@@ -345,7 +345,7 @@ helm install [CHART] [NAME] --namespace [NAMESPACE]
 - `[NAME]`: A name you choose for this release of the chart.
 - `[NAMESPACE]`: The namespace in which to install the chart. 
 
-#### Kubernetes Function Output Processing:
+#### Kubernetes Function Output Processing
 On the other hand, when processing the output of the `Kubernetes` function, the script creates all the necessary YAML files for Kubernetes resources. Once the YAML files are generated, they can be applied to your Kubernetes cluster using the `kubectl` command like so:
 
 ```bash
@@ -357,19 +357,25 @@ kubectl apply -f [FILENAME]
 
 This project facilitates the creation of Helm charts through a straightforward process. Here is a step-by-step walkthrough of generating a Helm chart using the `Helm` function of the `DevOps` plugin:
 
-1. **Executing the Plugin Function**:
+1. **Executing the Plugin Function**
+
+
    Begin by running the desired plugin function using `dotnet run`. In this example, we're using the `Helm` function of the `DevOps` plugin to process a description file (`keycloak_helm_chart.txt`). The OpenAI completion result is redirected to a text file (`output.txt`).
    ```bash
    dotnet run -- -i ./desc/keycloak_helm_chart.txt -f Helm > output.txt
    ```
 
-2. **Parsing the Output**:
+2. **Parsing the Output**
+
+
    Utilize the provided bash script (`parse.sh`) to process the output file, generating the necessary files and directory structure for the Helm chart.
    ```bash
    ./scripts/parse.sh -f output.txt -o keycloak 
    ```
 
-3. **Exploring the Generated Chart**:
+3. **Exploring the Generated Chart**
+
+
    Navigate to the generated chart directory and utilize the `tree` command to visualize the created files and directories. The Helm chart is now ready for use and is structured as per Helm's standard directory structure.
    ```bash
    cd keycloak
