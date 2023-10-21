@@ -216,7 +216,7 @@ Use images from bitnami.
 ```
 
 ## Function and Plugin Organization
-The functions are organized into either "DevOps" or "Engineering" plugins under the `plugins` folder. A plugin is a collection of one or more functions. Each function contains a `config.json` and `skprompt.txt` file for configuration and prompt setup respectively.
+The functions are organized as subfolders under the `plugins` folder. A plugin is a collection of one or more functions. Each function contains a `config.json` and `skprompt.txt` file for configuration and prompt setup respectively.
 
 #### Configuration via `appsettings.plugins.json`
 
