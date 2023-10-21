@@ -216,7 +216,8 @@ Use images from bitnami.
 ```
 
 ## Function and Plugin Organization
-The functions are organized into subfolders under the `plugins` folder. A plugin is a collection of one or more functions. Each function contains a `config.json` and `skprompt.txt` file for configuration and prompt setup respectively.
+The functions within Semantic Kernel are organized into subfolders under the `plugins` folder, and are identified as either semantic or native functions. A plugin encapsulates one or more functions. Semantic functions are accompanied by a `config.json` and `skprompt.txt` file, situated within their respective subfolders for configuration and prompt setup. The `config.json` file elucidates the function's input parameters and descriptive information essential for the AI service, while `skprompt.txt` contains the *prompt setup*. Conversely, native functions, written in C#, have their configurations defined directly within the C# code, and do not require separate `config.json` and `skprompt.txt` files. These configurations are achieved using annotations in the code which allows the kernel to comprehend the behavior of the function, and are typically defined as public methods of a class representing the plugin in a file named after the plugin (e.g., [HttpPlugin.cs](https://github.com/brakmic/SKPlayground/blob/main/plugins/Http/HttpPlugin.cs)) within the same plugin directory. Both semantic and native functions can reside within the same plugin directory and are loaded into the same plugin namespace by the kernel, provided their names are unique within the namespace.
+
 
 #### Configuration via `appsettings.plugins.json`
 
