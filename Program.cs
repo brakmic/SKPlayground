@@ -5,10 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Events;
 using Microsoft.SemanticKernel.Orchestration;
-using Microsoft.SemanticKernel.Planning;
-using Microsoft.SemanticKernel.SemanticFunctions;
 using SkPlayground.Plugins;
-using static Microsoft.SemanticKernel.SemanticFunctions.PromptTemplateConfig;
 using SkPlayground.Extensions;
 using Microsoft.SemanticKernel.Planners;
 using Microsoft.SemanticKernel.Connectors.Memory.Weaviate;
@@ -22,6 +19,10 @@ using SkPlayground.Models;
 using Microsoft.SemanticKernel.Connectors.AI.OpenAI;
 using Microsoft.SemanticKernel.Connectors.AI.OpenAI.ChatCompletion;
 using SkPlayground.Util.Helpers;
+using Microsoft.SemanticKernel.TemplateEngine;
+using Microsoft.SemanticKernel.Planning;
+using Microsoft.SemanticKernel.AI;
+using static Microsoft.SemanticKernel.TemplateEngine.PromptTemplateConfig;
 
 namespace SkPlayground;
 class Program
@@ -55,8 +56,8 @@ class Program
         //RunWithActionPlanner,
         //RunWithSequentialPlanner,
         //RunWithHooks, /* this example uses the native function "ExecuteGet" from HttpPlugin */
-        //RunWithHooks2, /* this example uses a semantic function and the Markdown converter function */
-        RunWithRag,
+        RunWithHooks2, /* this example uses a semantic function and the Markdown converter function */
+        //RunWithRag,
         fileOption, functionOption
     );
 
@@ -235,32 +236,41 @@ class Program
 
     if (kernelSettings.EndpointType == EndpointTypes.TextCompletion)
     {
-      // this is the "config.json" of our semantic function
-      var promptConfig = new PromptTemplateConfig
+      var promptTemplateConfig = new PromptTemplateConfig
       {
-#pragma warning disable 618
-        Schema = 1,
-        Type = "completion",
         Description = "Ask something about a person",
-#pragma warning restore 618
-        Input =
-        {
-            Parameters = new List<InputParameter>
+        Input = {
+          Parameters = new List<InputParameter>
+          {
+            new InputParameter
             {
-                new InputParameter
-                {
-                    Name = "input",
-                    Description = "Person's names",
-                    DefaultValue = ""
-                }
+              Name = "input",
+              Description = "Person's names",
+              DefaultValue = ""
             }
+          }
         }
       };
+
+      var requestSettings = new OpenAIRequestSettings
+      {
+        ModelId = kernelSettings.DeploymentOrModelId,
+        ServiceId = kernelSettings.ServiceId,
+        MaxTokens = 1000,
+        PresencePenalty = 0,
+        FrequencyPenalty = 0,
+        TopP = 1,
+        Temperature = 0.79,
+      };
+      promptTemplateConfig.ModelSettings.Add(requestSettings);
+
       // we define the semantic function
       var askAbutPerson = kernel.CreateSemanticFunction(
-        "Write a short document about {{$input}}. It must have titles and paragraphs.",
-        config: promptConfig,
-        functionName: "askAboutPerson");
+          "Write a short document about {{$input}}. It must have titles and paragraphs.",
+          promptTemplateConfig: promptTemplateConfig,
+          functionName: "askAboutPerson",
+          pluginName: "PersonPlugin"
+        );
 
       // configure hooks
       kernel.FunctionInvoking += (object? sender, FunctionInvokingEventArgs e) =>
