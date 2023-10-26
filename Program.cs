@@ -56,8 +56,8 @@ class Program
         //RunWithActionPlanner,
         //RunWithSequentialPlanner,
         //RunWithHooks, /* this example uses the native function "ExecuteGet" from HttpPlugin */
-        RunWithHooks2, /* this example uses a semantic function and the Markdown converter function */
-        //RunWithRag,
+        //RunWithHooks2, /* this example uses a semantic function and the Markdown converter function */
+        RunWithRag,
         fileOption, functionOption
     );
 

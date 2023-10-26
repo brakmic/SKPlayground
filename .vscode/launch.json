@@ -167,8 +167,8 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/Views"
       },
-      "console": "internalConsole",
-      "justMyCode": false,
+      "console": "integratedTerminal",
+      "justMyCode": true,
       "symbolOptions": {
         "searchPaths": [],
         "searchMicrosoftSymbolServer": true,
