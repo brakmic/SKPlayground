@@ -99,6 +99,14 @@ This repository serves as a companion to a series of articles discussing the int
 │   ├── SecretYamlGenerator
 │   ├── SecretYamlUpdater
 │   └── TextMemoryEx
+│
+├── webserver
+│   ├── assets
+│   ├── config
+│   ├── controllers
+│   ├── dtos
+│   ├── formatters
+│   └── responses
 ```
 
 ## Core Features
