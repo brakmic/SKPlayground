@@ -16,9 +16,9 @@ namespace SKPlayground.webserver.controllers
 
         [HttpPost("GenerateSHA256Hash")]
         [SwaggerOperation(
-            Summary = "Generates a SHA256 Hash of the provided input string.",
+            Summary = "Generates an SHA256 Hash of the provided input string.",
             OperationId = "GenerateSHA256Hash",
-            Description = "Generates a SHA256 hash of the provided input string."
+            Description = "Generates an SHA256 hash of the provided input string."
         )]
         [SwaggerResponse(200, "SHA256 Hash generated successfully.", typeof(HashResponse), Description = "SHA256 Hash generated successfully.")]
         public IActionResult GenerateSha256Hash([FromBody] string input)
