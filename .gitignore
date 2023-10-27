@@ -17,3 +17,5 @@ weaviate_data
 qdrant_data
 .env
 *.sqlite
+
+logs/
