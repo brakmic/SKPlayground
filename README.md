@@ -43,15 +43,17 @@ This project leverages the power of the Microsoft [Semantic Kernel](https://gith
     - [Hooks](#hooks)
     - [Jupyter Notebook](#jupyter-notebook)
   - [Retrieval Augmented Generation (RAG)](#retrieval-augmented-generation-rag)
+    - [ChatGPT Plugins with Chat Copilot](#chatgpt-plugins-with-chat-copilot)
   - [LICENSE](#license)
 
 ## Companion Article Series
 This repository serves as a companion to a series of articles discussing the integration and utilization of Semantic Kernel. These articles provide deeper insights into the concepts and functionalities demonstrated in this repository.
 
 - [Intro to Semantic Kernel - Part One](https://blog.brakmic.com/intro-to-semantic-kernel-part-one) 
-- [Intro to Semantic Kernel - Part Two](https://blog.brakmic.com/intro-to-semantic-kernel-part-two/)
+- [Intro to Semantic Kernel - Part Two](https://blog.brakmic.com/intro-to-semantic-kernel-part-two)
 - [Intro to Semantic Kernel - Part Three](https://blog.brakmic.com/intro-to-semantic-kernel-part-three)
-- [Intro to Semantic Kernel - Part Four](https://blog.brakmic.com/intro-to-semantic-kernel-part-four/)
+- [Intro to Semantic Kernel - Part Four](https://blog.brakmic.com/intro-to-semantic-kernel-part-four)
+- [Intro to Semantic Kernel - Part Five](https://blog.brakmic.com/intro-to-semantic-kernel-part-five)
 
 ## Project Structure
 
@@ -469,5 +471,10 @@ public async Task SaveAsync(
 ### Retrieval Augmented Generation (RAG)
 
 ![using_rag](./gifs/using_rag.gif)
+
+#### ChatGPT Plugins with Chat Copilot
+
+![use_chatgpt_plugin](./gifs/use_chatgpt_plugin.gif)
+
 ### LICENSE
 [MIT](./LICENSE.md)
