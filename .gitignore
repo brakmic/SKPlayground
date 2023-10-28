@@ -19,3 +19,8 @@ qdrant_data
 *.sqlite
 
 logs/
+
+.vs
+Backup/
+UpgradeLog.htm
+
