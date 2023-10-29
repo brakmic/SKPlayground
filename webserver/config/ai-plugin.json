@@ -3,7 +3,7 @@
   "name_for_model": "CryptoAssistant",
   "name_for_human": "Crypto Assistant",
   "description_for_model": "Provides functionalities for hash generation, and creation of self-signed keys and certificates with optional user-defined properties.",
-  "description_for_human": "Provides a suite of cryptographic and certificate generation functionalities that can be utilized in various security and data integrity applications.",
+  "description_for_human": "Provides a suite of cryptographic and certificate generation functionalities.",
   "auth": {
     "type": "none"
   },
