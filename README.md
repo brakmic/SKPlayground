@@ -44,6 +44,7 @@ This project leverages the power of the Microsoft [Semantic Kernel](https://gith
     - [Jupyter Notebook](#jupyter-notebook)
   - [Retrieval Augmented Generation (RAG)](#retrieval-augmented-generation-rag)
   - [ChatGPT Plugins with Chat Copilot](#chatgpt-plugins-with-chat-copilot)
+  - [ChatGPT Plugins with ChatGPT](#chatgpt-plugins-with-chatgpt)
   - [LICENSE](#license)
 
 ## Companion Article Series
@@ -483,6 +484,10 @@ public async Task SaveAsync(
 ### ChatGPT Plugins with Chat Copilot
 
 ![use_chatgpt_plugin](./gifs/use_chatgpt_plugin.gif)
+
+### ChatGPT Plugins with ChatGPT
+
+![crypto_assistant_plugin](./gifs/crypto_assistant_plugin.gif)
 
 ### LICENSE
 [MIT](./LICENSE.md)
