@@ -34,7 +34,8 @@ using Microsoft.Extensions.Logging.Console;
 using Serilog;
 using Serilog.Events;
 using SkPlayground.WebServer.Formatters;
-
+using SkPlayground.WebServer.Filters;
+using SkPlayground.WebServer.Middleware;
 
 namespace SkPlayground;
 class Program
@@ -127,62 +128,60 @@ class Program
 
   private static async Task RunWebServer()
   {
-    var builder = WebApplication.CreateBuilder();
+        var builder = WebApplication.CreateBuilder(new WebApplicationOptions { Args = new[] { $"--urls=http://*:{8082}" } });
 
-    builder.Services.AddControllers(options =>
-    {
-      options.InputFormatters.Insert(0, new CertificateInfoFormatter());
-      options.InputFormatters.Insert(1, new InputDataFormatter());
-    });
-
-    // Configure Serilog
-    Log.Logger = new LoggerConfiguration()
-        .MinimumLevel.Debug()
-        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-        .Enrich.FromLogContext()
-        .WriteTo.Console()
-        .WriteTo.File("logs/webserver.txt", rollingInterval: RollingInterval.Day)
-        .CreateLogger();
+        // Configure Serilog
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Verbose()
+            .MinimumLevel.Override("System", LogEventLevel.Information)
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+            .WriteTo.Console()
+            .WriteTo.File("logs/webserver.txt", rollingInterval: RollingInterval.Day)
+            .CreateLogger();
 
 
-    builder.Configuration.AddJsonFiles(Directory.GetCurrentDirectory(), "appsettings.*.json", optional: true, reloadOnChange: true);
+        builder.Configuration.AddJsonFiles(Directory.GetCurrentDirectory(), "appsettings.*.json", optional: true, reloadOnChange: true);
 
-    builder.Services.AddControllers();
-    builder.Services.AddSwaggerGen(c =>
-    {
-      c.SwaggerDoc("v1", new OpenApiInfo { Title = "Plugin API", Version = "v1" });
-      c.EnableAnnotations();
-    });
+        builder.Services.AddControllers();
 
-    builder.Logging.AddSerilog();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Crypto Asistant Plugin API", Version = "v1" });
+            c.EnableAnnotations();
+        });
 
-    builder.Logging.AddConsole(options =>
-    {
-      options.FormatterName = ConsoleFormatterNames.Simple;
-    });
-    builder.Logging.AddSimpleConsole(options =>
-    {
-      options.IncludeScopes = true;
-    });
+        builder.Logging.AddSerilog();
 
-    var app = builder.Build();
+        builder.Logging.AddConsole(options =>
+        {
+          options.FormatterName = ConsoleFormatterNames.Simple;
+        });
+        builder.Logging.AddSimpleConsole(options =>
+        {
+          options.IncludeScopes = true;
+        });
 
-    if (app.Environment.IsDevelopment())
-    {
-      app.UseDeveloperExceptionPage();
-      app.UseSwagger();
-      app.UseSwaggerUI(c =>
-      {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-        c.RoutePrefix = string.Empty;
-      });
-    }
+        var app = builder.Build();
 
-    app.UseHttpsRedirection();
-    app.UseAuthorization();
-    app.MapControllers();
+        if (app.Environment.IsDevelopment())
+        {
+          app.UseDeveloperExceptionPage();
+          app.UseSwagger();
+          app.UseSwaggerUI(c =>
+          {
+              c.SwaggerEndpoint("/swagger/v1/swagger.json", "Crypto Assistant API V1");
+              c.RoutePrefix = string.Empty;
+          });
+        }
 
-    await app.RunAsync();
+        app.UseMiddleware<ContentTypeMiddleware>();
+
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.MapControllers();
+        
+        await app.RunAsync();
   }
 
   private static async Task RunWithActionPlanner(FileInfo file, string function)
