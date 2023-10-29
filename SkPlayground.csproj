@@ -31,6 +31,12 @@
     <None Update="appsettings.plugins.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="webserver\assets\images\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="webserver\config\ai-plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="skills\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

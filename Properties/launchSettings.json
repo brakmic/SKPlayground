@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "SkPlayground": {
+      "commandName": "Project",
+      "commandLineArgs": "-w",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
