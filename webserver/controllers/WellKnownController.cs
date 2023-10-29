@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace SkPlayground.Controllers
 {
@@ -6,22 +7,23 @@ namespace SkPlayground.Controllers
   [Route(".well-known")]
   public class WellKnownController : ControllerBase
   {
-    [HttpGet("ai-plugin.json")]
-    [Produces("application/json")]
-    public async Task<IActionResult> GetAiPluginJson()
-    {
-      var request = HttpContext.Request;
-      var host = $"{request.Scheme}://{request.Host}";
+        [HttpGet("ai-plugin.json")]
+        [SwaggerOperation(OperationId = "GetAiPluginJson")]
+        [Produces("application/json")]
+            public async Task<IActionResult> GetAiPluginJson()
+        {
+          var request = HttpContext.Request;
+          var host = $"https://{request.Host}";
 
-      var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "webserver", "config", "ai-plugin.json");
-      if (!System.IO.File.Exists(jsonFilePath))
-      {
-        return NotFound();
-      }
+          var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "webserver", "config", "ai-plugin.json");
+          if (!System.IO.File.Exists(jsonFilePath))
+          {
+            return NotFound();
+          }
 
-      var json = await System.IO.File.ReadAllTextAsync(jsonFilePath);
-      json = json.Replace("{url}", $"{host}");
-      return Content(json, "application/json");
-    }
+          var json = await System.IO.File.ReadAllTextAsync(jsonFilePath);
+          json = json.Replace("{url}", $"{host}");
+          return Content(json, "application/json");
+        }
   }
 }

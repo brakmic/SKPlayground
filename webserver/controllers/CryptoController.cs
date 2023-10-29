@@ -6,7 +6,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using SkPlayground.WebServer.Dtos;
 
-
 namespace SKPlayground.webserver.controllers
 {
     [ApiController]
@@ -20,16 +19,18 @@ namespace SKPlayground.webserver.controllers
             OperationId = "GenerateSHA256Hash",
             Description = "Generates an SHA256 hash of the provided input string."
         )]
+        [Consumes("application/json", "text/plain")]
+        [Produces("application/json")]
         [SwaggerResponse(200, "SHA256 Hash generated successfully.", typeof(HashResponse), Description = "SHA256 Hash generated successfully.")]
-        public IActionResult GenerateSha256Hash([FromBody] string input)
+        public IActionResult GenerateSha256Hash([FromBody] HashRequest hashRequest)
         {
-            if (string.IsNullOrEmpty(input))
+            if (hashRequest == null || string.IsNullOrEmpty(hashRequest.Input))
             {
                 return BadRequest("Input string is null or empty.");
             }
 
             using var sha256 = SHA256.Create();
-            var bytes = Encoding.UTF8.GetBytes(input);
+            var bytes = Encoding.UTF8.GetBytes(hashRequest.Input);
             var hashBytes = sha256.ComputeHash(bytes);
             var hashString = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
 
@@ -38,20 +39,21 @@ namespace SKPlayground.webserver.controllers
 
         [HttpPost("GenerateMD5Hash")]
         [SwaggerOperation(
-        Summary = "Generates an MD5 Hash of the provided input string.",
-        OperationId = "GenerateMD5Hash",
-        Description = "Generates an MD5 hash of the provided input string. Note: MD5 is considered weak and not recommended for cryptographic purposes."
-    )]
+            Summary = "Generates an MD5 Hash of the provided input string.",
+            OperationId = "GenerateMD5Hash",
+            Description = "Generates an MD5 hash of the provided input string. Note: MD5 is considered weak and not recommended for cryptographic purposes."
+        )]
+        [Produces("application/json")]
         [SwaggerResponse(200, "MD5 Hash generated successfully.", typeof(HashResponse), Description = "MD5 Hash generated successfully.")]
-        public IActionResult GenerateMD5Hash([FromBody] string input)
+        public IActionResult GenerateMD5Hash([FromBody] HashRequest hashRequest)
         {
-            if (string.IsNullOrEmpty(input))
+            if (hashRequest == null || string.IsNullOrEmpty(hashRequest.Input))
             {
                 return BadRequest("Input string is null or empty.");
             }
 
             using var md5 = MD5.Create();
-            var bytes = Encoding.UTF8.GetBytes(input);
+            var bytes = Encoding.UTF8.GetBytes(hashRequest.Input);
             var hashBytes = md5.ComputeHash(bytes);
             var hashString = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
 
@@ -64,6 +66,7 @@ namespace SKPlayground.webserver.controllers
             OperationId = "GenerateRSAPair",
             Description = "Generates an RSA key pair encoded in base64 format."
         )]
+        [Produces("application/json")]
         [SwaggerResponse(200, "RSA key pair generated successfully.", typeof(RsaPairResponse))]
         public ActionResult<RsaPairResponse> GenerateRSAPair()
         {
@@ -88,8 +91,10 @@ namespace SKPlayground.webserver.controllers
         [HttpGet("GenerateSelfSignedKeyCert")]
         [SwaggerOperation(
             Summary = "Generates self-signed key and certificate encoded in base64 format.",
-            OperationId = "GenerateSelfSignedKeyCert"
+            OperationId = "GenerateSelfSignedKeyCert",
+            Description = "Generates self-signed key and certificate encoded in base64 format."
         )]
+        [Produces("application/json")]
         [SwaggerResponse(200, "Key and certificate generated successfully.", typeof(KeyCertResponse))]
         public ActionResult<KeyCertResponse> GenerateKeyCert()
         {
@@ -123,9 +128,11 @@ namespace SKPlayground.webserver.controllers
 
         [HttpPost("GenerateCustomKeyCert")]
         [SwaggerOperation(
-        Summary = "Creates self-signed key and certificate based on user-provided information. It is encoded in base64 format.",
-        OperationId = "GenerateCustomKeyCert"
-    )]
+            Summary = "Creates self-signed key and certificate based on user-provided information. It is encoded in base64 format.",
+            OperationId = "GenerateCustomKeyCert",
+            Description = "Creates self-signed key and certificate based on user-provided information."
+        )]
+        [Produces("application/json")]
         [SwaggerResponse(200, "Certificate created successfully.", typeof(KeyCertResponse))]
         public ActionResult<KeyCertResponse> GenerateCustomKeyCert([FromBody] CertificateInfo certInfo)
         {
