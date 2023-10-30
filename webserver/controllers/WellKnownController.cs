@@ -13,7 +13,7 @@ namespace SkPlayground.Controllers
             public async Task<IActionResult> GetAiPluginJson()
         {
           var request = HttpContext.Request;
-          var host = $"https://{request.Host}";
+          var host = $"{request.Protocol}://{request.Host}";
 
           var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "webserver", "config", "ai-plugin.json");
           if (!System.IO.File.Exists(jsonFilePath))
