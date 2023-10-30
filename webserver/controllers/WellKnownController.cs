@@ -13,6 +13,7 @@ namespace SkPlayground.Controllers
             public async Task<IActionResult> GetAiPluginJson()
         {
           var request = HttpContext.Request;
+          // when running behind a secured URL, set protocol to HTTPS
           var host = $"{request.Protocol}://{request.Host}";
 
           var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "webserver", "config", "ai-plugin.json");
