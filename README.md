@@ -155,14 +155,14 @@ The program can be executed via the command line using the `dotnet run` command,
 
 ![task_list](./images/task_list.png)
 
-| Method Name | Description | Required Arguments |
+| Method | Description | Arguments |
 |---|---|---|
 | `RunWebServer` | Initiates a web server to host a Crypto Assistant Plugin API. | None |
 | `RunWithActionPlanner` | Executes a specified function using an action planner. | `FileInfo file` |
 | `RunWithSequentialPlanner` | Executes a specified function using a sequential planner. | `FileInfo file` |
-| `RunWithHooks` | Executes a specified function with pre- and post-execution hooks. |  |
-| `RunWithHooks2` | Executes a specified function with pre- and post-execution hooks, with a different hook configuration. |  |
-| `RunWithRag` | Showcases Retrieval-augmented Generation |  |
+| `RunWithHooks` | Executes a specified function with pre- and post-execution hooks. | None |
+| `RunWithHooks2` | Executes a specified function with pre- and post-execution hooks, with a different hook configuration. | None |
+| `RunWithRag` | Showcases Retrieval-augmented Generation | None |
 
 
 
