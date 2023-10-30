@@ -82,7 +82,7 @@ class Program
     await rootCommand.InvokeAsync(args);
   }
 
-  private static async Task Run(FileInfo file, string function, bool runWebServer, string method = "")
+  private static async Task Run(FileInfo file, string function, bool runWebServer, string method = "RunDefault")
   {
 
     if (runWebServer)
