@@ -1,6 +1,5 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using SkPlayground.WebServer.Dtos;
 
 namespace SkPlayground.WebServer.Formatters;
 
@@ -14,7 +13,17 @@ public class InputDataFormatter : TextInputFormatter
     SupportedEncodings.Add(UTF16EncodingLittleEndian);
   }
 
-  public override async Task<InputFormatterResult> ReadRequestBodyAsync(
+  protected override bool CanReadType(Type type)
+  {
+      if (type == typeof(string))
+      {
+          return base.CanReadType(type);
+      }
+      return false;
+  }
+
+
+    public override async Task<InputFormatterResult> ReadRequestBodyAsync(
       InputFormatterContext context, Encoding effectiveEncoding)
   {
     var request = context.HttpContext.Request;
