@@ -151,20 +151,22 @@ SkPlayground is built on C# and [.NET 7](https://dotnet.microsoft.com/en-us/down
 
 ## Usage Examples
 
-The program can be executed via the command line using the `dotnet run` command, along with specifying two arguments: `-i` (or `--input`) for the input file, and `-f` (or `--function`) for the function to be executed. The input file should contain a description of the task, and the function argument should specify which function to run.
+The program can be executed via the command line using the `dotnet run` command, along with specifying three arguments: `-i` (or `--input`) for the input file, `-f` (or `--function`) for the plugin function to be executed, and `-m` (or `--method`) to select one of the available program methods listed below. The input file should contain a description of the task, and the function argument should specify which function to run. When no method is selected with the `-m` flag, the `RunDefault` method will be used. The `launch.json` of the VSCode is already set up and contains various examples that showcase the usage of all possible methods.
+
+![task_list](./images/task_list.png)
+
+| Method Name | Description | Required Arguments |
+|---|---|---|
+| `RunWebServer` | Initiates a web server to host a Crypto Assistant Plugin API. | None |
+| `RunWithActionPlanner` | Executes a specified function using an action planner. | `FileInfo file` |
+| `RunWithSequentialPlanner` | Executes a specified function using a sequential planner. | `FileInfo file` |
+| `RunWithHooks` | Executes a specified function with pre- and post-execution hooks. |  |
+| `RunWithHooks2` | Executes a specified function with pre- and post-execution hooks, with a different hook configuration. |  |
+| `RunWithRag` | Showcases Retrieval-augmented Generation |  |
+
+
 
 **When using Planners**, there's no need to manually set the function.
-
-**Before executing any task**, ensure to activate the compatible `Run*` method within the *CommandLine* handler.
-
-```cs
- rootCommand.SetHandler(
-        //Run,
-        //RunWithActionPlanner,
-        RunWithSequentialPlanner,
-        fileOption, functionOption
-    );
-```
 
 Here are some examples:
 
