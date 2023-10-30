@@ -8,7 +8,12 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-      "args": ["-i", "./desc/sequential_planner/keycloak_plan.txt"],
+      "args": [
+        "-i",
+        "./desc/sequential_planner/keycloak_plan.txt",
+        "-m",
+        "RunWithSequentialPlanner"
+      ],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "serverReadyAction": {
@@ -29,7 +34,12 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-      "args": ["-i", "./desc/sequential_planner/generate_secret_plan.txt"],
+      "args": [
+        "-i",
+        "./desc/sequential_planner/generate_secret_plan.txt",
+        "-m",
+        "RunWithSequentialPlanner"
+      ],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "serverReadyAction": {
@@ -50,7 +60,12 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-      "args": ["-i", "./desc/sequential_planner/extract_js.txt"],
+      "args": [
+        "-i",
+        "./desc/sequential_planner/extract_js.txt",
+        "-m",
+        "RunWithSequentialPlanner"
+      ],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "serverReadyAction": {
@@ -71,7 +86,12 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-      "args": ["-i", "./desc/action_planner/download_document.txt"],
+      "args": [
+        "-i",
+        "./desc/action_planner/download_document.txt",
+        "-m",
+        "RunWithActionPlanner"
+      ],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "serverReadyAction": {
@@ -92,7 +112,12 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-      "args": ["-i", "./desc/action_planner/find_url.txt"],
+      "args": [
+        "-i",
+        "./desc/action_planner/find_url.txt",
+        "-m",
+        "RunWithActionPlanner"
+      ],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "serverReadyAction": {
@@ -113,7 +138,12 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-      "args": ["-i", "./desc/action_planner/create_html_doc.txt"],
+      "args": [
+        "-i",
+        "./desc/action_planner/create_html_doc.txt",
+        "-m",
+        "RunWithActionPlanner"
+      ],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "serverReadyAction": {
@@ -134,7 +164,34 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-      "args": [""],
+      "args": [
+        "-m",
+        "RunWithHooks"
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "console": "internalConsole"
+    },
+    {
+      "name": "Hooks2",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
+      "args": [
+        "-m",
+        "RunWithHooks2"
+      ],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "serverReadyAction": {
@@ -155,7 +212,10 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-      "args": [""],
+      "args": [
+        "-m",
+        "RunWithRag"
+      ],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "serverReadyAction": {
@@ -177,12 +237,19 @@
       }
     },
     {
-      "name": "Debug Run",
+      "name": "Run (Default)",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/bin/Debug/net7.0/SkPlayground.dll",
-      "args": ["-i", "./desc/keycloak_prod_with_mysql.txt", "-f", "Kubernetes"],
+      "args": [
+        "-i",
+        "./desc/keycloak_prod_with_mysql.txt",
+        "-f",
+        "Kubernetes",
+        "-m",
+        "RunDefault"
+      ],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "serverReadyAction": {
