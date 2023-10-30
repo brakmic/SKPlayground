@@ -62,70 +62,98 @@ class Program
         new[] { "--webserver", "-w" },
         "Run the web server.");
 
+    var methodOption = new Option<string>(
+        new[] { "--method", "-m" },
+        "Method to execute.");
+
     var rootCommand = new RootCommand
         {
             fileOption,
             functionOption,
-            webServerOption
+            webServerOption,
+            methodOption
         };
 
     rootCommand.SetHandler(
         Run,
-        //RunWithActionPlanner,
-        //RunWithSequentialPlanner,
-        //RunWithHooks, /* this example uses the native function "ExecuteGet" from HttpPlugin */
-        //RunWithHooks2, /* this example uses a semantic function and the Markdown converter function */
-        //RunWithRag,
-        fileOption, functionOption, webServerOption
+        fileOption, functionOption, webServerOption, methodOption
     );
 
     await rootCommand.InvokeAsync(args);
   }
 
-  private static async Task Run(FileInfo file, string function, bool runWebServer)
+  private static async Task Run(FileInfo file, string function, bool runWebServer, string method = "")
   {
 
     if (runWebServer)
     {
-      await RunWebServer();
+      method = "WebServer";
     }
-    else
+
+    switch (method)
     {
-      var kernelSettings = KernelSettings.LoadSettings();
-
-      using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
-      {
-        builder
-                .SetMinimumLevel(kernelSettings.LogLevel ?? LogLevel.Warning)
-                .AddConsole()
-                .AddDebug();
-      });
-
-      IKernel kernel = new KernelBuilder()
-          .WithLoggerFactory(loggerFactory)
-          .WithCompletionService(kernelSettings)
-          .Build();
-
-      if (kernelSettings.EndpointType == EndpointTypes.TextCompletion)
-      {
-        var rootDirectory = Configuration!.GetSection("PluginSettings:Root").Get<string>();
-        var pluginDirectories = Configuration.GetSection("PluginSettings:Plugins").Get<string[]>();
-
-        var pluginsRoot = Path.Combine(Directory.GetCurrentDirectory(), rootDirectory!);
-        var pluginImport = kernel.ImportSemanticFunctionsFromDirectory(pluginsRoot, pluginDirectories!);
-
-        string description = await File.ReadAllTextAsync(file.FullName);
-        var context = new ContextVariables();
-
-        string key = "input";
-        context.Set(key, description);
-
-        var result = await kernel.RunAsync(context, pluginImport[function]);
-        Console.WriteLine(result.GetValue<string>());
-      }
+      case "RunDefault":
+        await RunDefault(file, function);
+        break;
+      case "RunWithActionPlanner":
+        await RunWithActionPlanner(file, function);
+        break;
+      case "RunWithSequentialPlanner":
+        await RunWithSequentialPlanner(file, function);
+        break;
+      case "RunWithHooks":  /* this example uses the native function "ExecuteGet" from HttpPlugin */
+        await RunWithHooks(file, function);
+        break;
+      case "RunWithHooks2": /* this example uses a semantic function and the Markdown converter function */
+        await RunWithHooks2(file, function);
+        break;
+      case "RunWithRag":
+        await RunWithRag(file, function);
+        break;
+      case "WebServer":
+        await RunWebServer();
+        break;
+      default:
+        Console.WriteLine("Invalid method option.");
+        break;
     }
   }
 
+  private static async Task RunDefault(FileInfo file, string function)
+  {
+    var kernelSettings = KernelSettings.LoadSettings();
+
+    using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+    {
+      builder
+              .SetMinimumLevel(kernelSettings.LogLevel ?? LogLevel.Warning)
+              .AddConsole()
+              .AddDebug();
+    });
+
+    IKernel kernel = new KernelBuilder()
+        .WithLoggerFactory(loggerFactory)
+        .WithCompletionService(kernelSettings)
+        .Build();
+
+    if (kernelSettings.EndpointType == EndpointTypes.TextCompletion)
+    {
+      var rootDirectory = Configuration!.GetSection("PluginSettings:Root").Get<string>();
+      var pluginDirectories = Configuration.GetSection("PluginSettings:Plugins").Get<string[]>();
+
+      var pluginsRoot = Path.Combine(Directory.GetCurrentDirectory(), rootDirectory!);
+      var pluginImport = kernel.ImportSemanticFunctionsFromDirectory(pluginsRoot, pluginDirectories!);
+
+      string description = await File.ReadAllTextAsync(file.FullName);
+      var context = new ContextVariables();
+
+      string key = "input";
+      context.Set(key, description);
+
+      var result = await kernel.RunAsync(context, pluginImport[function]);
+      Console.WriteLine(result.GetValue<string>());
+    }
+  }
   private static async Task RunWebServer()
   {
     var builder = WebApplication.CreateBuilder(new WebApplicationOptions { Args = new[] { $"--urls=http://*:{8082}" } });
@@ -183,7 +211,6 @@ class Program
 
     await app.RunAsync();
   }
-
   private static async Task RunWithActionPlanner(FileInfo file, string function)
   {
     var kernelSettings = KernelSettings.LoadSettings();
@@ -299,7 +326,6 @@ class Program
       Console.WriteLine($"\nRESULT:\n{result.GetValue<string>()}");
     }
   }
-
   private static async Task RunWithHooks2(FileInfo file, string function)
   {
     #region Kernel Setup
@@ -372,7 +398,6 @@ class Program
       var result = await kernel.RunAsync("Dennis Ritchie", askAbutPerson);
     }
   }
-
   private static async Task RunWithRag(FileInfo file, string function)
   {
     var kernelSettings = KernelSettings.LoadSettings();
@@ -475,7 +500,6 @@ class Program
     await RunChat(textMemory, kernel, collection);
 
   }
-
   private static async Task RunChat(ISemanticTextMemory textMemory, IKernel kernel, string collection)
   {
     string input = string.Empty;
