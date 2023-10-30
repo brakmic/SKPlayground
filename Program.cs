@@ -128,60 +128,60 @@ class Program
 
   private static async Task RunWebServer()
   {
-        var builder = WebApplication.CreateBuilder(new WebApplicationOptions { Args = new[] { $"--urls=http://*:{8082}" } });
+    var builder = WebApplication.CreateBuilder(new WebApplicationOptions { Args = new[] { $"--urls=http://*:{8082}" } });
 
-        // Configure Serilog
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Verbose()
-            .MinimumLevel.Override("System", LogEventLevel.Information)
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
-            .WriteTo.File("logs/webserver.txt", rollingInterval: RollingInterval.Day)
-            .CreateLogger();
+    // Configure Serilog
+    Log.Logger = new LoggerConfiguration()
+        .MinimumLevel.Verbose()
+        .MinimumLevel.Override("System", LogEventLevel.Information)
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+        .Enrich.FromLogContext()
+        .WriteTo.Console()
+        .WriteTo.File("logs/webserver.txt", rollingInterval: RollingInterval.Day)
+        .CreateLogger();
 
 
-        builder.Configuration.AddJsonFiles(Directory.GetCurrentDirectory(), "appsettings.*.json", optional: true, reloadOnChange: true);
+    builder.Configuration.AddJsonFiles(Directory.GetCurrentDirectory(), "appsettings.*.json", optional: true, reloadOnChange: true);
 
-        builder.Services.AddControllers();
+    builder.Services.AddControllers();
 
-        builder.Services.AddSwaggerGen(c =>
-        {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Crypto Asistant Plugin API", Version = "v1" });
-            c.EnableAnnotations();
-        });
+    builder.Services.AddSwaggerGen(c =>
+    {
+      c.SwaggerDoc("v1", new OpenApiInfo { Title = "Crypto Asistant Plugin API", Version = "v1" });
+      c.EnableAnnotations();
+    });
 
-        builder.Logging.AddSerilog();
+    builder.Logging.AddSerilog();
 
-        builder.Logging.AddConsole(options =>
-        {
-          options.FormatterName = ConsoleFormatterNames.Simple;
-        });
-        builder.Logging.AddSimpleConsole(options =>
-        {
-          options.IncludeScopes = true;
-        });
+    builder.Logging.AddConsole(options =>
+    {
+      options.FormatterName = ConsoleFormatterNames.Simple;
+    });
+    builder.Logging.AddSimpleConsole(options =>
+    {
+      options.IncludeScopes = true;
+    });
 
-        var app = builder.Build();
+    var app = builder.Build();
+    app.UseSwagger();
 
-        if (app.Environment.IsDevelopment())
-        {
-          app.UseDeveloperExceptionPage();
-          app.UseSwagger();
-          app.UseSwaggerUI(c =>
-          {
-              c.SwaggerEndpoint("/swagger/v1/swagger.json", "Crypto Assistant API V1");
-              c.RoutePrefix = string.Empty;
-          });
-        }
+    if (app.Environment.IsDevelopment())
+    {
+      app.UseDeveloperExceptionPage();
+      app.UseSwaggerUI(c =>
+      {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Crypto Assistant API V1");
+        c.RoutePrefix = string.Empty;
+      });
+    }
 
-        app.UseMiddleware<ContentTypeMiddleware>();
+    app.UseMiddleware<ContentTypeMiddleware>();
 
-        app.UseStaticFiles();
-        app.UseRouting();
-        app.MapControllers();
-        
-        await app.RunAsync();
+    app.UseStaticFiles();
+    app.UseRouting();
+    app.MapControllers();
+
+    await app.RunAsync();
   }
 
   private static async Task RunWithActionPlanner(FileInfo file, string function)
