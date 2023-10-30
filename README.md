@@ -158,11 +158,11 @@ The program can be executed via the command line using the `dotnet run` command,
 | Method | Description | Arguments |
 |---|---|---|
 | `RunWebServer` | Initiates a web server to host a Crypto Assistant Plugin API. | None |
-| `RunWithActionPlanner` | Executes a specified function using an action planner. | `FileInfo file` |
-| `RunWithSequentialPlanner` | Executes a specified function using a sequential planner. | `FileInfo file` |
-| `RunWithHooks` | Executes a specified function with pre- and post-execution hooks. | None |
-| `RunWithHooks2` | Executes a specified function with pre- and post-execution hooks, with a different hook configuration. | None |
-| `RunWithRag` | Showcases Retrieval-augmented Generation | None |
+| `RunWithActionPlanner` | Processes the given prompt using an action planner. | `FileInfo file` |
+| `RunWithSequentialPlanner` | Processes the given prompt using a sequential planner. | `FileInfo file` |
+| `RunWithHooks` | Showcases pre- and post-execution hooks. | None |
+| `RunWithHooks2` | Showcases pre- and post-execution hooks, with a different hook configuration. | None |
+| `RunWithRag` | Showcases Retrieval-augmented Generation (RAG) | None |
 
 
 
