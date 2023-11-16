@@ -410,7 +410,7 @@ class Program
               .AddDebug();
     });
 
-    IKernel kernel = Kernel.Builder
+    IKernel kernel = new KernelBuilder()
                      .WithLoggerFactory(loggerFactory)
                      .WithOpenAITextCompletionService(
                             modelId: kernelSettings.DeploymentOrModelId,
